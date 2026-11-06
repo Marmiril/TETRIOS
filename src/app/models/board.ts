@@ -69,4 +69,20 @@ export class Board {
         return this.grid[row].every(cell => cell !== null);
     }
 
+    // Removes completed rows and shifts the remaining rows downward -- Returns the number of cleared rows.
+    public clearFullRows(): number {
+        let clearedRows = 0;
+
+        for (let row = BOARD_ROWS - 1; row >= 0; row--) {
+            if (this.isRowFull(row)) {
+                this.grid.splice(row, 1);
+                this.grid.unshift(Array(BOARD_COLUMNS).fill(null)); // unshift() introduce una nueva fila vacía en la parte superior.
+
+                clearedRows++;
+                row++; // Permite revisar nuevamente esa posición, porque las filas superiores se han desplazado hacia abajo.
+            }
+        }
+        return clearedRows;
+    }
+
 }
