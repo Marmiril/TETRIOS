@@ -1,6 +1,6 @@
 # TETRIOS
 
-HTML5 | CSS3 | JavaScript ES6+
+**Angular | TypeScript | HTML5 | CSS3 | Canvas 2D**
 
 Español
 
@@ -28,23 +28,22 @@ El proyecto está destinado a formar parte de un portfolio personal y servirá p
 
 *** Tecnologías ***
 
-- HTML5: estructura e interfaz.
-- CSS3: diseño visual, animaciones y adaptación a distintas pantallas.
-- JavaScript ES6+: lógica del juego, gestión de estados, eventos y controles.
-- Canvas API: representación gráfica del tablero y las piezas.
+- Angular: arquitectura de componentes, servicios y gestión de la interfaz.
+- TypeScript: lógica del juego, modelos, interfaces, enumeraciones y gestión de estados.
+- HTML5: estructura de la interfaz.
+- CSS3: diseño visual, animaciones y adaptación a diferentes pantallas.
+- Canvas 2D API: representación gráfica del tablero y las piezas.
 - LocalStorage: almacenamiento de récords y preferencias.
 
 *** Arquitectura ***
 
-- El proyecto sigue una arquitectura modular basada en la separación de responsabilidades:
-- Core: coordinación del juego, estados y bucle principal.
-- Model: representación del tablero, las piezas y la partida.
-- Logic: colisiones, rotaciones, eliminación de líneas y puntuación.
-- Systems: controles, dificultad y almacenamiento de récords.
-- View: renderizado mediante Canvas e interfaz de usuario.
-- Config: constantes y enumeraciones.
-
-Esta organización permitirá ampliar las funcionalidades sin modificar innecesariamente los componentes existentes.
+El proyecto utilizará una arquitectura modular basada en Angular, separando la interfaz del motor de juego:
+- Components: menús, tablero, HUD y pantallas.
+- Services: coordinación de partidas, dificultades y récords.
+- Models: representación del tablero, piezas y estado de la partida.
+- Game Engine: movimientos, colisiones, rotaciones, gravedad y puntuación.
+- Config: constantes, enumeraciones y parámetros de configuración.
+- Esta organización permitirá ampliar las funcionalidades sin modificar innecesariamente los componentes existentes.
 
 *** Plan de desarrollo ***
 
@@ -90,21 +89,21 @@ The project is intended for a personal portfolio and will serve as an opportunit
 
 *** Technologies ***
 
-- HTML5: structure and user interface.
-- CSS3: visual design, animations, and responsive layout.
-- JavaScript ES6+: game logic, state management, events, and controls.
-- Canvas API: graphical rendering of the board and pieces.
+- Angular: component architecture, services, and user interface management.
+- TypeScript: game logic, models, interfaces, enumerations, and state management.
+- HTML5: user interface structure.
+- CSS3: visual design, animations, and responsive layouts.
+- Canvas 2D API: graphical rendering of the board and pieces.
 - LocalStorage: persistent high scores and preferences.
 
 *** Architecture ***
 
-The project follows a modular architecture based on separation of concerns:
-- Core: game coordination, states, and main game loop.
-- Model: board, pieces, and game session representation.
-- Logic: collisions, rotations, line clearing, and scoring.
-- Systems: input handling, difficulty, and high-score storage.
-- View: Canvas rendering and user interface.
-- Config: constants and enumerations.
+The project will use a modular Angular architecture, separating the user interface from the game engine:
+- Components: menus, game board, HUD, and screens.
+- Services: game session coordination, difficulty management, and high scores.
+- Models: board, pieces, and game state representation.
+- Game Engine: movement, collisions, rotations, gravity, and scoring.
+- Config: constants, enumerations, and configuration parameters.
 
 This structure is designed to support future extensions while minimizing unnecessary changes to existing components.
 
