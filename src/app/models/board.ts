@@ -14,10 +14,7 @@ export class Board {
     private grid: (string | null)[][]
 
     constructor() {
-        this.grid = Array.from(
-            { length: BOARD_ROWS },
-            () => Array(BOARD_COLUMNS).fill(null)
-        );
+        this.grid = this.createGrid();
     }
 
     public getGrid(): (string | null)[][] {
@@ -45,6 +42,31 @@ export class Board {
         if (!this.isEmpty(row, col)) { return false; }
         this.grid[row][col] = color;
         return true;
+    }
+
+    // Returns the content of a specified board cell
+    public getCell(row: number, col: number): string | null {
+        if (!this.isInside(row, col)) { return; }
+        return this.grid[row][col];
+    }
+
+    // Resets the board by clearing all cells
+    public reset(): void {
+        this.grid = this.createGrid();
+    }
+
+    // Creates an empty board grid
+    private createGrid(): (string | null)[][] {
+        return Array.from(
+            {length: BOARD_ROWS },
+            () => Array(BOARD_COLUMNS).fill(null)
+        );
+    }
+
+    // Checks whether all cells in a row are occupied
+    public isRowFull(row: number): boolean{
+        if (row < 0 || row >= BOARD_ROWS) { return false; }
+        return this.grid[row].every(cell => cell !== null);
     }
 
 }
