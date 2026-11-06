@@ -1,3 +1,12 @@
+/**
+ * GameController
+ *
+ * Manages the game session and controls transitions between application states.
+ * Handles starting, pausing, resuming, and ending games, as well as returning
+ * to the main menu.
+ * Ensures that state transitions only occur when permitted.
+ */
+
 import { AppState } from '../config/enum';
 import { GameSession } from '../models/game-session';
 
