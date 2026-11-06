@@ -48,7 +48,7 @@ export class CollisionSystem {
 
     // Moves a piece if the requested position is valid.
     // Returns true if the movement was successful.
-    public movePice(
+    public movePiece(
         board: Board,
         piece: Piece,
         deltaX: number,
@@ -61,4 +61,26 @@ export class CollisionSystem {
         piece.y += deltaY;        
         return true;
     }
+
+    // Checks whether a piece van no longer move downward
+    public isGrounded(board: Board, piece: Piece): boolean { return !this.canMove(board, piece, 0, 1); }
+
+    // Locks a piece into the board by storing its occupied cells
+    public lockPiece(
+        board: Board,
+        piece: Piece
+    ): void {
+        if (!this.canPlacePiece(board, piece, piece.x, piece.y)) { return; }
+        for (let row = 0; row < piece.shape.length; row++) {
+            for (let col = 0; col < piece.shape[row].length; col++) {
+                if (piece.shape[row][col] === 0) continue;
+
+                const boardRow = piece.y + row;
+                const boardCol = piece.x + col;
+
+                board.setCell(boardRow, boardCol, piece.color);
+            }
+        }
+    }
 }
+
