@@ -30,4 +30,35 @@ export class CollisionSystem {
         }
         return true;
     }    
+
+    // Checks whether ta piece can move by the specified offset.
+    public canMove(
+        board: Board,
+        piece: Piece,
+        deltaX: number,
+        deltaY: number
+    ): boolean {
+        return this.canPlacePiece(
+            board,
+            piece,
+            piece.x + deltaX,
+            piece.y + deltaY
+        );
+    }
+
+    // Moves a piece if the requested position is valid.
+    // Returns true if the movement was successful.
+    public movePice(
+        board: Board,
+        piece: Piece,
+        deltaX: number,
+        deltaY: number
+    ): boolean {
+
+        if(!this.canMove(board, piece, deltaX, deltaY)) { return false; }
+        
+        piece.x += deltaX;
+        piece.y += deltaY;        
+        return true;
+    }
 }
