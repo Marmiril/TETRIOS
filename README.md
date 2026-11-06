@@ -1,137 +1,59 @@
-# TETRIOS
+# Tetrios
 
-HTML5 | CSS3 | JavaScript ES6+
+This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.6.
 
-Español
+## Development server
 
-Descripción
+To start a local development server, run:
 
-TETRIS es un proyecto de desarrollo web inspirado en el clásico videojuego de puzles, construido utilizando HTML5, CSS3 y JavaScript puro.
+```bash
+ng serve
+```
 
-El objetivo es desarrollar un juego completo, modular y escalable, aplicando principios de programación orientada a objetos, separación de responsabilidades y gestión de estados.
+Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-El proyecto está destinado a formar parte de un portfolio personal y servirá para profundizar en el desarrollo de videojuegos para navegador.
+## Code scaffolding
 
-*** Características previstas*** 
+Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
 
-- Juego clásico de Tetris.
-- Menú principal y navegación entre pantallas.
-- Sistema de pausa, reanudación y reinicio.
-- Siete niveles de dificultad.
-- Sistema de puntuación y eliminación de líneas.
-- Tabla de récords con almacenamiento local.
-- Visualización de próximas piezas.
-- Sistema de reserva de piezas (hold).
-- Efectos visuales y sonoros.
-- Interfaz adaptable a diferentes resoluciones.
-- Nueva modalidad con varias piezas cayendo simultáneamente (futura actualización).
+```bash
+ng generate component component-name
+```
 
-*** Tecnologías ***
+For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
 
-- HTML5: estructura e interfaz.
-- CSS3: diseño visual, animaciones y adaptación a distintas pantallas.
-- JavaScript ES6+: lógica del juego, gestión de estados, eventos y controles.
-- Canvas API: representación gráfica del tablero y las piezas.
-- LocalStorage: almacenamiento de récords y preferencias.
+```bash
+ng generate --help
+```
 
-*** Arquitectura ***
+## Building
 
-- El proyecto sigue una arquitectura modular basada en la separación de responsabilidades:
-- Core: coordinación del juego, estados y bucle principal.
-- Model: representación del tablero, las piezas y la partida.
-- Logic: colisiones, rotaciones, eliminación de líneas y puntuación.
-- Systems: controles, dificultad y almacenamiento de récords.
-- View: renderizado mediante Canvas e interfaz de usuario.
-- Config: constantes y enumeraciones.
+To build the project run:
 
-Esta organización permitirá ampliar las funcionalidades sin modificar innecesariamente los componentes existentes.
+```bash
+ng build
+```
 
-*** Plan de desarrollo ***
+This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
-- Configuración inicial y estructura del proyecto.
-- Definición de estados, enumeraciones y modelos.
-- Creación y representación del tablero.
-- Implementación de piezas, movimientos, rotaciones y colisiones.
-- Desarrollo del bucle principal y la gravedad.
-- Eliminación de líneas y sistema de puntuación.
-- Configuración de dificultades.
-- Desarrollo de menús e interfaz.
-- Implementación de récords y persistencia.
-- Pruebas, optimización y publicación.
-- Desarrollo de la modalidad de piezas simultáneas.
+## Running unit tests
 
-*** Estado del proyecto ***
+To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
 
-En desarrollo — Fase inicial.
+```bash
+ng test
+```
 
-Actualmente se está preparando la estructura y arquitectura del proyecto. Las funcionalidades descritas forman parte de la planificación y se implementarán progresivamente.
+## Running end-to-end tests
 
-**English**
+For end-to-end (e2e) testing, run:
 
-*** Description ***
+```bash
+ng e2e
+```
 
-TETRIS is a web development project inspired by the classic puzzle video game, built using HTML5, CSS3, and vanilla JavaScript.
-The goal is to create a complete, modular, and scalable game while applying object-oriented programming principles, separation of concerns, and state management.
-The project is intended for a personal portfolio and will serve as an opportunity to improve browser-based game development skills.
+Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
-*** Planned Features ***
+## Additional Resources
 
-- Classic Tetris gameplay.
-- Main menu and screen navigation.
-- Pause, resume, and restart functionality.
-- Seven difficulty levels.
-- Scoring and line-clearing system.
-- High-score leaderboard with local storage.
-- Next-piece preview.
-- Piece hold system.
-- Visual and sound effects.
-- Responsive interface.
-- Additional game mode featuring multiple pieces falling simultaneously (future update).
-
-*** Technologies ***
-
-- HTML5: structure and user interface.
-- CSS3: visual design, animations, and responsive layout.
-- JavaScript ES6+: game logic, state management, events, and controls.
-- Canvas API: graphical rendering of the board and pieces.
-- LocalStorage: persistent high scores and preferences.
-
-*** Architecture ***
-
-The project follows a modular architecture based on separation of concerns:
-- Core: game coordination, states, and main game loop.
-- Model: board, pieces, and game session representation.
-- Logic: collisions, rotations, line clearing, and scoring.
-- Systems: input handling, difficulty, and high-score storage.
-- View: Canvas rendering and user interface.
-- Config: constants and enumerations.
-
-This structure is designed to support future extensions while minimizing unnecessary changes to existing components.
-
-*** Development Roadmap ***
-
-- Initial project setup and directory structure.
-- Definition of states, enumerations, and models.
-- Board creation and rendering.
-- Piece movement, rotation, and collision detection.
-- Main game loop and gravity implementation.
-- Line clearing and scoring system.
-- Difficulty configuration.
-- Menus and user interface.
-- High-score management and persistence.
-- Testing, optimization, and release.
-- Development of the simultaneous falling pieces mode.
-
-*** Project Status ***
-
-In development — Initial stage.
-
-The project structure and architecture are currently being prepared. All described features are planned and will be implemented progressively.
-
-Author / Autor
-
-Ángel Plata Benítez
-
-Portfolio: angelplata.com
-
-GitHub: Marmiril
+For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
