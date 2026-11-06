@@ -48,6 +48,22 @@ export class RotationSystem {
         return true;
     }
 
+    // Rotates a shape 90 degrees copunterclockwise
+    // Returns a new matiex without modifying the original
+    public rotateCounterClockwise(shape: number[][]): number[][] {
+        
+        const rows = shape.length;
+        const cols = shape[0].length;
+
+        return Array.from(
+            { length: cols },
+            (_, row) => Array.from(
+                { length: rows },
+                (_, col) => shape[col][col - 1 - row]
+            )
+        );
+    }
+
 
 
     
