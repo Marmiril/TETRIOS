@@ -40,4 +40,11 @@ export class Board {
         return this.grid[row][col] === null;
     }
 
+    // Places a block in a specified board cell
+    public setCell(row: number, col: number, color: string): boolean {
+        if (!this.isEmpty(row, col)) { return false; }
+        this.grid[row][col] = color;
+        return true;
+    }
+
 }
