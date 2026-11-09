@@ -10,6 +10,7 @@
 import { Board } from '../models/board';
 import { Piece } from '../models/piece';
 import { CollisionSystem } from './collision-system';
+import { TetrominoType } from '../config/enum';
 
 export class RotationSystem {
     // Rotates a shape 90 degrees clokwise
@@ -26,16 +27,23 @@ export class RotationSystem {
         );
     }
 
-    // Attempst ot rotate a piece clockwise
+    // Attempst ot rotate a piece in the specified direction
     // Applies the rotation only if the new position is valid.
     public tryRotate(
         board: Board,
         piece: Piece,
-        collisionSystem: CollisionSystem
+        collisionSystem: CollisionSystem, 
+        clockwise: boolean
     ): boolean {
-        
-        const rotatedShape = this.rotateClockwise(piece.shape);
+
+        // Skips rotatios for square trominoes,
+        if (piece.type === TetrominoType.O) { return true; }
+
         const originalShape = piece.shape;
+
+        const rotatedShape = clockwise
+            ? this.rotateClockwise(piece.shape)
+            : this.rotateCounterClockwise(piece.shape);
         
         piece.shape = rotatedShape;
         
@@ -44,7 +52,7 @@ export class RotationSystem {
             return false;
         }
 
-        piece.rotation = (piece.rotation + 90) % 360;
+        piece.rotation = (piece.rotation ? 90 : 270) % 360;
         return true;
     }
 
@@ -64,7 +72,18 @@ export class RotationSystem {
         );
     }
 
+    // Returns candidate position offsets for a rotation
+    // These offsets allow piece to rotate near obstacles
 
+    private getWallKickOffsets(): number[][] {
+        return[
+            [0, 0],
+            [-1, 0],
+            [-2, 0],
+            [1, 0],
+            [2, 0]
+        ];
+    }
 
     
 }
