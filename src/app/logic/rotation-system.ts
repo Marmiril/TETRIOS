@@ -23,13 +23,16 @@ export class RotationSystem {
             { length: cols },
             (_, row) => Array.from(
                 { length: rows },
-                (_, col) => shape[row - 1 - col][row]
+                (_, col) => shape[rows - 1 - col][row]
             )
         );
     }
 
-    // Attempst ot rotate a piece using the wallkickoffsets
-    // Applies the rotation only if the new position is valid or restores the original shape
+        /**
+     * Attempts to rotate a piece using the SRS wall kick system.
+     * Applies the first valid rotation and position adjustment.
+     * Restores the original shape if all attempts fail.
+     */
     public tryRotate(
         board: Board,
         piece: Piece,
@@ -48,10 +51,16 @@ export class RotationSystem {
         const rotatedShape = clockwise
             ? this.rotateClockwise(piece.shape)
             : this.rotateCounterClockwise(piece.shape);
+
+        const offsets = this.getWallKickOffsets(
+            piece, 
+            fromRotation,
+            toRotation
+        );
         
         piece.shape = rotatedShape;
 
-        for (const [deltaX, deltaY] of this.getWallKickOffsets(piece, fromRotation, toRotation)) {
+        for (const [deltaX, deltaY] of offsets) {
             const newX = piece.x + deltaX;
             const newY = piece.y + deltaY;
             
@@ -60,18 +69,9 @@ export class RotationSystem {
                 piece.x = newX;
                 piece.y = newY;
 
-                piece.rotation = (
-                    piece.rotation + (clockwise ? 90 : 270)
-                ) % 360;
                 return true;
             }        
         }
-
-        if (!collisionSystem.canPlacePiece(board, piece, piece.x, piece.y)) {
-            piece.shape = originalShape;
-            return false;
-        }
-
         piece.shape = originalShape;
         return false;
     }
@@ -87,14 +87,41 @@ export class RotationSystem {
             { length: cols },
             (_, row) => Array.from(
                 { length: rows },
-                (_, col) => shape[col][col - 1 - row]
+                (_, col) => shape[col][cols - 1 - row]
             )
+        );
+    }
+
+    // Tests clockwise and counterclockwise rotations.
+    public testRotation(): void {
+        const shape = [
+            [0, 1, 0],
+            [1, 1, 1], 
+            [0, 0, 0]
+        ];
+
+        console.log("Clockwise:");
+        console.table(this.rotateClockwise(shape));
+
+        console.log("Counterclockwise:");
+        console.table(this.rotateCounterClockwise(shape));
+
+        const piece = new Piece(
+            TetrominoType.T,
+            [
+                [0, 1, 0],
+                [1, 1, 1,],
+                [0, 0, 0,]
+            ],
+            "purple",
+            4,
+            5,
+            0
         );
     }
 
     // Returns the SRS wall kick offsets for a specific rotation.
     // Selects the appropriate table based on the tetromino type.
-
     private getWallKickOffsets(
         piece: Piece,
         fromRotation: number,

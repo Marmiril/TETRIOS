@@ -1,4 +1,4 @@
-import { TetrominoType } from '../config/enum';
+import { TetrominoType, Rotation } from '../config/enum';
 import { DEFAULT_SPEED_MULTIPLIER } from '../config/constants';
 
 export class Piece {
@@ -16,7 +16,7 @@ export class Piece {
         color: string,
         x: number,
         y: number,
-        rotation: number,
+        rotation: Rotation.DEG_0,
         speedMultiplier: number = DEFAULT_SPEED_MULTIPLIER
     ) {
         this.type = type;

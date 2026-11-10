@@ -46,7 +46,7 @@ export class Board {
 
     // Returns the content of a specified board cell
     public getCell(row: number, col: number): string | null {
-        if (!this.isInside(row, col)) { return; }
+        if (!this.isInside(row, col)) { return null; }
         return this.grid[row][col];
     }
 
