@@ -18,7 +18,7 @@ export class PieceFactory {
         color: string
     ): Piece {
         
-        const shape = TETROMINO_SHAPES.map(row => [...row]);
+        const shape = TETROMINO_SHAPES[type].map(row => [...row]);
         
         const x = Math.floor(BOARD_COLUMNS - shape[0].length) / 2;
 
@@ -30,8 +30,5 @@ export class PieceFactory {
             0,
             Rotation.DEG_0
         );
-
-
     }
-
 }
