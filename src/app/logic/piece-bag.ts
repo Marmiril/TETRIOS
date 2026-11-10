@@ -17,8 +17,25 @@ export class PieceBag {
     }
 
     private refillingBag(): void {
-        this.bag = Object
-        .values(TetrominoType);
+
+        this.bag = Object.values(TetrominoType);
+
+        // Fisher-Yates shuffle
+        for (let i = 0; i < this.bag.length; i++) {
+            const j = Math.floor(Math.random() * (i + 1));
+            
+            [this.bag[i], this.bag[j]] = [this.bag[j], this.bag[i]];
+        }
     }
+
+        // Refills the bag with random tetrominoes, allowing duplicates.
+    private refillingBagRepeat(): void {
+        const types = Object.values(TetrominoType);
+        this.bag = Array.from(
+            { length: types.length },
+            () => types[Math.floor(Math.random() * types.length)]
+        );
+    }
+
 
 }
