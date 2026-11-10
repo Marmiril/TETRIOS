@@ -7,7 +7,7 @@ export class Piece {
     public color: string;
     public x: number;
     public y: number;
-    public rotation: number;
+    public rotation: Rotation;
     public speedMultiplier: number;
 
     constructor(

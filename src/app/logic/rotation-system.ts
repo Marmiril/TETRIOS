@@ -118,6 +118,16 @@ export class RotationSystem {
             5,
             0
         );
+    console.log('Before rotation:', piece.x, piece.y, piece.rotation);
+    console.table(piece.shape);
+
+    const board = new Board();
+    const collisionSystem = new CollisionSystem();
+    const success = this.tryRotate(board, piece, collisionSystem, true);
+
+    console.log('Rotation successful:', success);
+    console.log('After rotation:', piece.x, piece.y, piece.rotation);
+    console.table(piece.shape);
     }
 
     // Returns the SRS wall kick offsets for a specific rotation.
