@@ -100,6 +100,7 @@ export class RotationSystem {
             [0, 0, 0]
         ];
         console.table(shape);
+        
         console.log("Clockwise:");
         console.table(this.rotateClockwise(shape));
 
