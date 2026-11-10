@@ -59,7 +59,7 @@ export class Board {
     private createGrid(): (string | null)[][] {
         return Array.from(
             {length: BOARD_ROWS },
-            () => Array(BOARD_COLUMNS).fill(null)
+            () => new Array(BOARD_COLUMNS).fill(null)
         );
     }
 
@@ -76,7 +76,7 @@ export class Board {
         for (let row = BOARD_ROWS - 1; row >= 0; row--) {
             if (this.isRowFull(row)) {
                 this.grid.splice(row, 1);
-                this.grid.unshift(Array(BOARD_COLUMNS).fill(null)); // unshift() introduce una nueva fila vacía en la parte superior.
+                this.grid.unshift(new Array(BOARD_COLUMNS).fill(null)); // unshift() introduce una nueva fila vacía en la parte superior.
 
                 clearedRows++;
                 row++; // Permite revisar nuevamente esa posición, porque las filas superiores se han desplazado hacia abajo.

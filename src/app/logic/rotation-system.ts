@@ -11,6 +11,7 @@ import { Board } from '../models/board';
 import { Piece } from '../models/piece';
 import { CollisionSystem } from './collision-system';
 import { TetrominoType, Rotation } from '../config/enum';
+import { TETROMINO_SHAPES } from '../config/tetromino-shapes';
 import { JLSTZ_WALL_KICKS, I_WALL_KICKS, KickOffset } from '../config/wall-kicks';
 
 export class RotationSystem {
@@ -94,13 +95,9 @@ export class RotationSystem {
 
     // Tests clockwise and counterclockwise rotations.
     public testRotation(): void {
-        const shape = [
-            [0, 1, 0],
-            [1, 1, 1],
-            [0, 0, 0]
-        ];
+        const shape = TETROMINO_SHAPES[TetrominoType.T];
         console.table(shape);
-        
+
         console.log("Clockwise:");
         console.table(this.rotateClockwise(shape));
 
@@ -109,11 +106,7 @@ export class RotationSystem {
 
         const piece = new Piece(
             TetrominoType.T,
-            [
-                [0, 1, 0],
-                [1, 1, 1],
-                [0, 0, 0]
-            ],
+            TETROMINO_SHAPES[TetrominoType.T],
             "purple",
             4,
             5,
@@ -133,11 +126,7 @@ export class RotationSystem {
         // Test the kick against a fixed block
         const wallPiece = new Piece(
             TetrominoType.T,
-            [
-                [0, 1, 0],
-                [1, 1, 1],
-                [0, 0, 0]
-            ],
+            TETROMINO_SHAPES[TetrominoType.T],
             "red",
             4,
             5,
@@ -176,11 +165,7 @@ export class RotationSystem {
         const blockedBoard = new Board();
         const blockedPiece = new Piece(
             TetrominoType.T,
-            [
-                [0, 1, 0],
-                [1, 1, 1],
-                [0, 0, 0]
-            ],
+            TETROMINO_SHAPES[TetrominoType.T],
             'purple',
             4,
             5, 
@@ -191,7 +176,7 @@ export class RotationSystem {
         for (let row = 0; row < blockedBoard.getGrid().length; row++) {
             for (let col = 0; col < blockedBoard.getGrid()[row].length; col++) {
                 const localRow = row - blockedPiece.y;
-                const localCol = row - blockedPiece.x;
+                const localCol = col - blockedPiece.x;
 
                 const occupiedByPiece = blockedPiece.shape[localRow]?.[localCol] === 1;
 
@@ -215,6 +200,32 @@ export class RotationSystem {
             'Shape unchanged:',
             JSON.stringify(blockedPiece.shape) === originalShape
         );
+
+        // Tests the I tetromino wall kick
+        const iBoard = new Board();
+        const iPiece = new Piece(
+            TetrominoType.I,
+            TETROMINO_SHAPES[TetrominoType.I],
+            'cyan',
+            4,
+            5,
+            Rotation.DEG_0
+        );
+
+        // Blocks the initial clockwise rotation
+        iBoard.setCell(5, 6, 'red');
+
+        const iSuccess = this.tryRotate(
+            iBoard,
+            iPiece,
+            collisionSystem,
+            true
+        );
+
+        console.log('I wall kick successful:', iSuccess);
+        console.log('I final position:', iPiece.x, iPiece.y);
+        console.log('I final rotation:', iPiece.rotation);
+        console.log(iPiece.shape);
 
     }
 
