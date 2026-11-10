@@ -227,6 +227,33 @@ export class RotationSystem {
         console.log('I final rotation:', iPiece.rotation);
         console.log(iPiece.shape);
 
+        const oPiece = new Piece(
+            TetrominoType.O,
+            TETROMINO_SHAPES[TetrominoType.O],
+            'yellow',
+            4,
+            5,
+            Rotation.DEG_0
+        );
+
+        const oOriginalShape =JSON.stringify(oPiece.shape);
+
+        const oSuccess = this.tryRotate(
+            board,
+            oPiece,
+            collisionSystem,
+            true
+        );
+
+        console.log('O rotation successfully:', oSuccess);
+        console.log('O positon:', oPiece.x, oPiece.y);
+        console.log('O rotation:', oPiece.rotation);
+        console.log(
+            'O shape unchanged:',
+            JSON.stringify(oPiece.shape) === oOriginalShape
+        );
+
+
     }
 
     // Returns the SRS wall kick offsets for a specific rotation.
