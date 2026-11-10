@@ -27,8 +27,8 @@ export class RotationSystem {
         );
     }
 
-    // Attempst ot rotate a piece in the specified direction
-    // Applies the rotation only if the new position is valid.
+    // Attempst ot rotate a piece using the wallkickoffsets
+    // Applies the rotation only if the new position is valid or restores the original shape
     public tryRotate(
         board: Board,
         piece: Piece,
@@ -46,14 +46,30 @@ export class RotationSystem {
             : this.rotateCounterClockwise(piece.shape);
         
         piece.shape = rotatedShape;
-        
+
+        for (const [deltaX, deltaY] of this.getWallKickOffsets()) {
+            const newX = piece.x + deltaX;
+            const newY = piece.y + deltaY;
+            
+            if (collisionSystem.canPlacePiece(board, piece, newX, newY)) {
+
+                piece.x = newX;
+                piece.y = newY;
+
+                piece.rotation = (
+                    piece.rotation + (clockwise ? 90 : 270)
+                ) % 360;
+                return true;
+            }        
+        }
+
         if (!collisionSystem.canPlacePiece(board, piece, piece.x, piece.y)) {
             piece.shape = originalShape;
             return false;
         }
 
-        piece.rotation = (piece.rotation ? 90 : 270) % 360;
-        return true;
+        piece.shape = originalShape;
+        return false;
     }
 
     // Rotates a shape 90 degrees copunterclockwise
