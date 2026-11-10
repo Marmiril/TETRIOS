@@ -11,6 +11,7 @@ import { Board } from '../models/board';
 import { Piece } from '../models/piece';
 import { CollisionSystem } from './collision-system';
 import { TetrominoType } from '../config/enum';
+import { JLSTZ_WALL_KICKS, I_WALL_KICKS, KickOffset } from '../config/wall-kicks';
 
 export class RotationSystem {
     // Rotates a shape 90 degrees clokwise
@@ -41,13 +42,16 @@ export class RotationSystem {
 
         const originalShape = piece.shape;
 
+        const fromRotation = piece.rotation;
+        const toRotation = (fromRotation + (clockwise ? 90 : 270)) % 360;
+
         const rotatedShape = clockwise
             ? this.rotateClockwise(piece.shape)
             : this.rotateCounterClockwise(piece.shape);
         
         piece.shape = rotatedShape;
 
-        for (const [deltaX, deltaY] of this.getWallKickOffsets()) {
+        for (const [deltaX, deltaY] of this.getWallKickOffsets(piece, fromRotation, toRotation)) {
             const newX = piece.x + deltaX;
             const newY = piece.y + deltaY;
             
@@ -88,17 +92,21 @@ export class RotationSystem {
         );
     }
 
-    // Returns candidate position offsets for a rotation
-    // These offsets allow piece to rotate near obstacles
+    // Returns the SRS wall kick offsets for a specific rotation.
+    // Selects the appropriate table based on the tetromino type.
 
-    private getWallKickOffsets(): number[][] {
-        return[
-            [0, 0],
-            [-1, 0],
-            [-2, 0],
-            [1, 0],
-            [2, 0]
-        ];
+    private getWallKickOffsets(
+        piece: Piece,
+        fromRotation: number,
+        toRotation: number
+    ): KickOffset[] {
+        const key = `${fromRotation}>${toRotation}`;
+
+        const kickTable = piece.type === TetrominoType.I
+            ? I_WALL_KICKS
+            : JLSTZ_WALL_KICKS;
+        
+        return kickTable[key] ?? [];
     }
 
     
