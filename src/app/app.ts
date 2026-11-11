@@ -23,17 +23,16 @@ export class App implements OnInit {
         // rotationSystem.testRotation();
         this.inputSystem = new InputSystem(controller);
 
-       
+
         const session = controller.getSession();
 
         console.log('Game state: ', session.state);
         console.log('Active pieces: ', session.activePieces);
+    }
 
-        @HostListener('window:keydown', ['$event'])
-        public onKeyDown(event: KeyboardEvent): void {
-            this.imputSystem.handleKeyDown(event);
-       }
-
+    @HostListener('window:keydown', ['$event'])
+    public onKeyDown(event: KeyboardEvent): void {
+        this.inputSystem.handleKeyDown(event);
     }
 
 }

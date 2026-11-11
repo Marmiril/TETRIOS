@@ -119,8 +119,18 @@ export class GameController {
         );
     }
 
-    public rotateActivePiece(clockWise: Boolean): boolean {
-        if (this.session.state != AppState.PLAYING) { return; }
+    public rotateActivePiece(clockwise: boolean): boolean {
+        if (this.session.state != AppState.PLAYING) { return false; }
+
+        const piece = this.session.activePieces[0];
+        if (!piece) { return false; }
+        
+        return this.rotationSystem.tryRotate(
+            this.session.board,
+            piece, 
+            this.collisionSystem,
+            clockwise
+        );
     }
 
     ///////// PRIVATE MODES //////////////////////////////////////////
