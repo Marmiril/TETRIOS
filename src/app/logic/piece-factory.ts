@@ -5,7 +5,7 @@
  * Places new pieces horizontally centered on the board.
  */
 
-import { BOARD_COLUMNS } from "../config/constants";
+import { BOARD_COLUMNS, PIECE_COLORS } from "../config/constants";
 import { Rotation, TetrominoType } from "../config/enum";
 import { TETROMINO_SHAPES } from "../config/tetromino-shapes";
 import { Piece } from "../models/piece";
@@ -30,5 +30,9 @@ export class PieceFactory {
             0,
             Rotation.DEG_0
         );
+    }
+
+    public colorPiece(): string {
+        return PIECE_COLORS[Math.floor(Math.random() * PIECE_COLORS.length)];
     }
 }
