@@ -19,6 +19,8 @@ export class GameController {
     private pieceBag: PieceBag;
     private pieceFactory: PieceFactory;
     private collisionSystem: CollisionSystem;
+    private gravityTimer: ReturnType<typeof setInterval> | null = null;
+    
 
     constructor() {
         this.session = new GameSession();
@@ -34,6 +36,7 @@ export class GameController {
         this.pieceBag = new PieceBag();
         this.session.state = AppState.PLAYING;
         this.spawnPiece();
+        this.startGravity();
     }
 
     public pauseGame(): void {
@@ -49,25 +52,6 @@ export class GameController {
     public endGame(): void {
         if (this.session.state !== AppState.PLAYING) return;
         this.session.state = AppState.GAME_OVER;
-    }
-
-    // Generates the next tetromino and adds it to the game session.
-    private spawnPiece(): void {
-        const type = this.pieceBag.nextType();
-        const color = this.pieceFactory.colorPiece();
-        const piece = this.pieceFactory.createPiece(type, color);
-
-        if (!this.collisionSystem.canPlacePiece(
-            this.session.board,
-            piece, 
-            piece.x,
-            piece.y
-        )) {
-            this.endGame();
-            return;
-        }
-
-        this.session.activePieces.push(piece);
     }
 
     // Moves the active piece if the game is running.
@@ -101,6 +85,8 @@ export class GameController {
         const clearedRows =  this.session.board.clearFullRows();
 
         this.session.lines += clearedRows;
+
+        this.spawnPiece();
     }
 
     // Advances the game by one gravity step.
@@ -115,7 +101,8 @@ export class GameController {
             this.session.board,
             piece)
         ) { 
-            this.lockActivePiece();             
+            this.lockActivePiece();  
+            return;           
         }
 
         this.collisionSystem.movePiece(
@@ -125,4 +112,42 @@ export class GameController {
             1
         );
     }
+
+        // Generates the next tetromino and adds it to the game session.
+    private spawnPiece(): void {
+        const type = this.pieceBag.nextType();
+        const color = this.pieceFactory.colorPiece();
+        const piece = this.pieceFactory.createPiece(type, color);
+
+        if (!this.collisionSystem.canPlacePiece(
+            this.session.board,
+            piece, 
+            piece.x,
+            piece.y
+        )) {
+            this.endGame();
+            return;
+        }
+
+        this.session.activePieces.push(piece);
+    }
+
+    // Starts the automatic gravity timer.
+    private startGravity(): void {
+        if (this.gravityTimer !== null) { clearInterval(this.gravityTimer); }
+
+        this.gravityTimer = setInterval(
+            () => this.tick(),
+            this.session.fallInterval
+        );
+    }
+
+    // Stops the gravity timer
+    private stopGravity(): void {
+        if (this.gravityTimer === null) { return; }
+
+        clearInterval(this.gravityTimer);
+        this.gravityTimer = null;
+    }
+    
 }
