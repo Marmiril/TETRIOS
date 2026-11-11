@@ -11,7 +11,9 @@ import { AppState } from '../config/enum';
 import { CollisionSystem } from '../logic/collision-system';
 import { PieceBag } from '../logic/piece-bag';
 import { PieceFactory } from '../logic/piece-factory';
+import { RotationSystem } from '../logic/rotation-system';
 import { GameSession } from '../models/game-session';
+import { Piece } from '../models/piece';
 
 export class GameController {
 
@@ -20,6 +22,7 @@ export class GameController {
     private pieceFactory: PieceFactory;
     private collisionSystem: CollisionSystem;
     private gravityTimer: ReturnType<typeof setInterval> | null = null;
+    private rotationSystem: RotationSystem;
     
 
     constructor() {
@@ -27,6 +30,7 @@ export class GameController {
         this.pieceBag = new PieceBag();
         this.pieceFactory = new PieceFactory();
         this.collisionSystem = new CollisionSystem();
+        this.rotationSystem = new RotationSystem();
     }
 
     public getSession(): GameSession { return this.session; }
@@ -42,16 +46,19 @@ export class GameController {
     public pauseGame(): void {
         if (this.session.state != AppState.PLAYING) return;
         this.session.state = AppState.PAUSED;
+        this.stopGravity();
     }
 
     public resumeGame(): void {
         if (this.session.state !== AppState.PAUSED) return;
         this.session.state = AppState.PLAYING;
+        this.startGravity();
     }
 
     public endGame(): void {
         if (this.session.state !== AppState.PLAYING) return;
         this.session.state = AppState.GAME_OVER;
+        this.stopGravity();
     }
 
     // Moves the active piece if the game is running.
@@ -119,15 +126,7 @@ export class GameController {
         const color = this.pieceFactory.colorPiece();
         const piece = this.pieceFactory.createPiece(type, color);
 
-        if (!this.collisionSystem.canPlacePiece(
-            this.session.board,
-            piece, 
-            piece.x,
-            piece.y
-        )) {
-            this.endGame();
-            return;
-        }
+        if (!this.checkCanSpawn(piece)) { return; }
 
         this.session.activePieces.push(piece);
     }
@@ -150,4 +149,16 @@ export class GameController {
         this.gravityTimer = null;
     }
     
+    private checkCanSpawn(piece: Piece): boolean {
+        if (!this.collisionSystem.canPlacePiece(
+            this.session.board,
+            piece, 
+            piece.x,
+            piece.y
+        )) {
+            this.endGame();
+            return false;
+        }
+        return true;
+    }
 }
