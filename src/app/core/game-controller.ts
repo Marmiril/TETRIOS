@@ -69,4 +69,34 @@ export class GameController {
 
         this.session.activePieces.push(piece);
     }
+
+    // Moves the active piece if the game is running.
+    public moveActivePiece(
+        deltaX: number,
+        deltaY: number): boolean {
+            if (this.session.state !== AppState.PLAYING) { return false; }
+
+            const piece = this.session.activePieces[0];
+
+            if (!piece) { return false; }
+
+            return this.collisionSystem.movePiece(
+                this.session.board,
+                piece,
+                deltaX,
+                deltaY
+            );
+    }
+
+    // Locks the active piece into the board
+    public lockActivePiece(): void {
+        const piece = this.session.activePieces[0];
+        if (!piece) { return; }
+        this.collisionSystem.lockPiece(
+            this.session.board,
+            piece
+        );
+        this.session.activePieces.shift();
+    }
+
 }
