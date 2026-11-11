@@ -97,6 +97,10 @@ export class GameController {
             piece
         );
         this.session.activePieces.shift();
+
+        const clearedRows =  this.session.board.clearFullRows();
+
+        this.session.lines += clearedRows;
     }
 
     // Advances the game by one gravity step.
