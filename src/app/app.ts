@@ -1,10 +1,11 @@
 
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+
 import { RotationSystem } from './logic/rotation-system';
+import { GameController } from './core/game-controller';
 
 @Component({
-    imports: [RouterOutlet],
+    imports: [],
     selector: 'app-root',
     styleUrl: './app.css',
     templateUrl: './app.html',
@@ -12,8 +13,15 @@ import { RotationSystem } from './logic/rotation-system';
 export class App implements OnInit {
 
     ngOnInit(): void {
-        const rotationSystem = new RotationSystem();
-        rotationSystem.testRotation();
+        // const rotationSystem = new RotationSystem();
+        const controller = new GameController();
+        controller.startGame();
+       // rotationSystem.testRotation();
+       
+       const session = controller.getSession();
+
+       console.log('Game state: ', session.state);
+       console.log('Active pieces: ', session.activePieces);
     }
 
 }

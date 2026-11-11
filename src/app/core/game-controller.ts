@@ -24,6 +24,7 @@ export class GameController {
         this.session = new GameSession();
         this.pieceBag = new PieceBag();
         this.pieceFactory = new PieceFactory();
+        this.collisionSystem = new CollisionSystem();
     }
 
     public getSession(): GameSession { return this.session; }
