@@ -99,4 +99,26 @@ export class GameController {
         this.session.activePieces.shift();
     }
 
+    // Advances the game by one gravity step.
+
+    public tick(): void {
+        if(this.session.state != AppState.PLAYING) { return; }
+
+        const piece = this.session.activePieces[0];
+        if (!piece) { return; }
+
+        if (this.collisionSystem.isGrounded(
+            this.session.board,
+            piece)
+        ) { 
+            this.lockActivePiece();             
+        }
+
+        this.collisionSystem.movePiece(
+            this.session.board,
+            piece,
+            0,
+            1
+        );
+    }
 }
