@@ -20,7 +20,7 @@ export class PieceFactory {
         
         const shape = TETROMINO_SHAPES[type].map(row => [...row]);
         
-        const x = Math.floor(BOARD_COLUMNS - shape[0].length) / 2;
+        const x = Math.floor((BOARD_COLUMNS - shape[0].length) / 2);
 
         return new Piece(
             type, 
