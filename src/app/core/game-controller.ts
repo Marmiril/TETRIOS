@@ -97,7 +97,6 @@ export class GameController {
     }
 
     // Advances the game by one gravity step.
-
     public tick(): void {
         if(this.session.state != AppState.PLAYING) { return; }
 
@@ -119,6 +118,12 @@ export class GameController {
             1
         );
     }
+
+    public rotateActivePiece(clockWise: Boolean): boolean {
+        if (this.session.state != AppState.PLAYING) { return; }
+    }
+
+    ///////// PRIVATE MODES //////////////////////////////////////////
 
         // Generates the next tetromino and adds it to the game session.
     private spawnPiece(): void {
