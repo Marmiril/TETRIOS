@@ -8,13 +8,21 @@
  */
 
 import { AppState } from '../config/enum';
+import { PieceBag } from '../logic/piece-bag';
+import { PieceFactory } from '../logic/piece-factory';
 import { GameSession } from '../models/game-session';
 
 export class GameController {
 
     private session: GameSession;
+    private pieceBag: PieceBag;
+    private pieceFactory: PieceFactory;
 
-    constructor() { this.session = new GameSession(); }
+    constructor() {
+        this.session = new GameSession();
+        this.pieceBag = new PieceBag();
+        this.pieceFactory = new PieceFactory();
+    }
 
     public getSession(): GameSession { return this.session; }
 
