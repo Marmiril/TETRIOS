@@ -13,6 +13,12 @@ export class InputSystem {
     constructor(private controller: GameController) {}
 
     public handleKeyDown(event: KeyboardEvent): void {
+
+        
+        if (this.pressedKeys.has(event.code)) return;
+
+        this.pressedKeys.add(event.code);
+
         switch(event.code) {
             case 'Arrowleft':
                 this.controller.moveActivePiece(-1, 0);
@@ -21,5 +27,10 @@ export class InputSystem {
                 this.controller.moveActivePiece(1, 0);
                 break;
         }
+    }
+
+    // Released a pressed key.
+    public handleKeyUp(event: KeyboardEvent): void {
+        this.pressedKeys.delete(event.code);
     }
 }
