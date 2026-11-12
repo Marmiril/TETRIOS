@@ -21,3 +21,10 @@ export const PIECE_COLORS: string[] = [
     '#0000FF', // Blue
     '#FF8800'  // Orange
 ]
+
+// Keyboard movement configuration
+export const HORIZONTAL_DAS = 170; // DAS (Delayed Auto Shift): tiempo de espera desde el desplazamiento inicial hasta que comienza la repetición automática.
+export const HORIZONTAL_ARR = 50; // ARR (Auto Repeat Rate): intervalo entre desplazamientos sucesivos una vez transcurrido el DAS.
+
+export const SOFT_DROP_DAS = 100;
+export const SOFT_DROP_ARR = 30
