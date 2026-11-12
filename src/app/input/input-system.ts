@@ -8,6 +8,8 @@ import { GameController } from '../core/game-controller';
 
 export class InputSystem {
 
+    private pressedKeys = new Set<string>();
+
     constructor(private controller: GameController) {}
 
     public handleKeyDown(event: KeyboardEvent): void {
