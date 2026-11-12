@@ -10,8 +10,11 @@ import { GameController } from '../core/game-controller';
 export class InputSystem {
 
     private pressedKeys = new Set<string>();
+
     private dasTimer: ReturnType<typeof setTimeout> | null = null;
     private arrTimer: ReturnType<typeof setInterval>  | null = null;
+
+    private activeHorizontalDirection: -1 | 1 | null = null;
 
     constructor(private controller: GameController) {}
 
@@ -36,9 +39,31 @@ export class InputSystem {
     // Released a pressed key.
     public handleKeyUp(event: KeyboardEvent): void {
         this.pressedKeys.delete(event.code);
+
+        const releasedDirection = 
+            event.code === 'ArrowLeft' ? -1 :
+            event.code === 'ArrowRight' ? 1 : null;
+
+        if (releasedDirection !== this.activeHorizontalDirection) { return; }
+
+        this.stopHorizontalRepeat();
+
+        // if (event.code === 'Arrowleft' || event.code === 'Arrowright') { this.stopHorizontalRepeat(); }
+
+        if (this.pressedKeys.has('ArrowRight')) {
+            this.controller.moveActivePiece(1, 0);
+            this.startHorizontalRepeat(1);
+        }
+        else if (this.pressedKeys.has('ArrowLeft')) {
+            this.controller.moveActivePiece(-1, 0)    ;
+            this.startHorizontalRepeat(-1);
+        }        
     }
 
     private startHorizontalRepeat(deltaX: number): void {
+        this.stopHorizontalRepeat();
+        this.activeHorizontalDirection = deltaX;
+
         this.dasTimer = setTimeout(() => {
             this.arrTimer = setInterval(() => {
                 this.controller.moveActivePiece(deltaX, 0);
@@ -47,13 +72,16 @@ export class InputSystem {
     }
 
     private stopHorizontalRepeat(): void{
+       
         if (this.dasTimer !== null) {
             clearTimeout(this.dasTimer);
             this.dasTimer = null;
         }
         if (this.arrTimer !== null) {
-            clearTimeout(this.arrTimer);
+            clearInterval(this.arrTimer);
             this.arrTimer = null;
         }
+
+        this.activeHorizontalDirection = null;
     }
 }
