@@ -73,12 +73,16 @@ export class GameController {
 
             if (!piece) { return false; }
 
-            return this.collisionSystem.movePiece(
+            const moved = this.collisionSystem.movePiece(
                 this.session.board,
                 piece,
                 deltaX,
                 deltaY
             );
+
+            if (this.collisionSystem.isGrounded(this.session.board, piece)) { this.startLockDelay(); }
+
+            return moved;
     }
 
     // Locks the active piece into the board
