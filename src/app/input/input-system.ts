@@ -16,7 +16,6 @@ export class InputSystem {
     constructor(private controller: GameController) {}
 
     public handleKeyDown(event: KeyboardEvent): void {
-
         
         if (this.pressedKeys.has(event.code)) return;
 
@@ -25,9 +24,11 @@ export class InputSystem {
         switch(event.code) {
             case 'Arrowleft':
                 this.controller.moveActivePiece(-1, 0);
+                this.startHorizontalRepeat(-1);
                 break;
             case 'Arrowright':
                 this.controller.moveActivePiece(1, 0);
+                this.startHorizontalRepeat(1);
                 break;
         }
     }
@@ -43,5 +44,16 @@ export class InputSystem {
                 this.controller.moveActivePiece(deltaX, 0);
             }, HORIZONTAL_ARR);
         }, HORIZONTAL_DAS);
+    }
+
+    private stopHorizontalRepeat(): void{
+        if (this.dasTimer !== null) {
+            clearTimeout(this.dasTimer);
+            this.dasTimer = null;
+        }
+        if (this.arrTimer !== null) {
+            clearTimeout(this.arrTimer);
+            this.arrTimer = null;
+        }
     }
 }
