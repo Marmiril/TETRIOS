@@ -30,6 +30,11 @@ export class App implements OnInit {
         console.log('Active pieces: ', session.activePieces);
     }
 
+    @HostListener('window:keyup', ['event'])
+    public onKeyUp(event: KeyboardEvent): void{
+        this.inputSystem.handleKeyUp(event);
+    }
+
     @HostListener('window:keydown', ['$event'])
     public onKeyDown(event: KeyboardEvent): void {
         this.inputSystem.handleKeyDown(event);
