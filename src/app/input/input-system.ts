@@ -4,7 +4,7 @@
  * Translates keyboard input into game controller actions.
  */
 
-import { HORIZONTAL_ARR, HORIZONTAL_DAS } from '../config/constants';
+import { HORIZONTAL_ARR, HORIZONTAL_DAS, SOFT_DROP_DAS, SOFT_DROP_ARR } from '../config/constants';
 import { GameController } from '../core/game-controller';
 
 export class InputSystem {
@@ -14,7 +14,11 @@ export class InputSystem {
     private dasTimer: ReturnType<typeof setTimeout> | null = null;
     private arrTimer: ReturnType<typeof setInterval>  | null = null;
 
+    private softDropDasTimer: ReturnType<typeof setTimeout> | null = null;
+    private softDropArrTimer: ReturnType<typeof setInterval> | null = null;
+
     private activeHorizontalDirection: -1 | 1 | null = null;
+
 
     constructor(private controller: GameController) {}
 
@@ -25,13 +29,17 @@ export class InputSystem {
         this.pressedKeys.add(event.code);
 
         switch(event.code) {
-            case 'arrowLeft':
+            case 'ArrowLeft':
                 this.controller.moveActivePiece(-1, 0);
                 this.startHorizontalRepeat(-1);
                 break;
             case 'ArrowRight':
                 this.controller.moveActivePiece(1, 0);
                 this.startHorizontalRepeat(1);
+                break;
+            case 'ArrowDown': 
+                this.controller.moveActivePiece(0, 1);
+                this.startSoftDropRepeat();
                 break;
         }
     }
@@ -40,21 +48,26 @@ export class InputSystem {
     public handleKeyUp(event: KeyboardEvent): void {
         this.pressedKeys.delete(event.code);
 
+        if (event.code === 'ArrowDown') {
+            this.stopSoftDropRepeat();
+            return;
+        }
+
         const releasedDirection = 
-            event.code === 'arrowLeft' ? -1 :
+            event.code === 'ArrowLeft' ? -1 :
             event.code === 'ArrowRight' ? 1 : null;
 
         if (releasedDirection !== this.activeHorizontalDirection) { return; }
 
         this.stopHorizontalRepeat();
 
-        // if (event.code === 'arrowLeft' || event.code === 'ArrowRight') { this.stopHorizontalRepeat(); }
+        // if (event.code === 'ArrowLeft' || event.code === 'ArrowRight') { this.stopHorizontalRepeat(); }
 
         if (this.pressedKeys.has('ArrowRight')) {
             this.controller.moveActivePiece(1, 0);
             this.startHorizontalRepeat(1);
         }
-        else if (this.pressedKeys.has('arrowLeft')) {
+        else if (this.pressedKeys.has('ArrowLeft')) {
             this.controller.moveActivePiece(-1, 0)    ;
             this.startHorizontalRepeat(-1);
         }        
@@ -84,5 +97,30 @@ export class InputSystem {
         }
 
         this.activeHorizontalDirection = null;
+    }
+
+    private startSoftDropRepeat(): void {
+        this.stopSoftDropRepeat();
+
+        this.softDropDasTimer = setTimeout(() => {
+            this.softDropDasTimer = null;
+
+            this.softDropArrTimer = setInterval(() => {
+                this.controller.moveActivePiece(0, 1);
+            }, SOFT_DROP_ARR);
+        }, SOFT_DROP_DAS)
+    }
+
+    private stopSoftDropRepeat(): void {
+      
+        if (this.softDropDasTimer !== null) {
+            clearTimeout(this.softDropDasTimer);
+            this.softDropDasTimer = null;
+        }
+
+        if (this.softDropArrTimer !== null) {
+            clearInterval(this.softDropArrTimer);
+            this.softDropArrTimer = null;
+        }
     }
 }
