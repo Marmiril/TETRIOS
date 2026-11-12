@@ -60,7 +60,7 @@ export class InputSystem {
         }        
     }
 
-    private startHorizontalRepeat(deltaX: number): void {
+    private startHorizontalRepeat(deltaX: -1 | 1): void {
         this.stopHorizontalRepeat();
         this.activeHorizontalDirection = deltaX;
 
