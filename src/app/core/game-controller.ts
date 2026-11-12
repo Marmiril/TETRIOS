@@ -7,6 +7,7 @@
  * Ensures that state transitions only occur when permitted.
  */
 
+import { LOCK_DELAY } from '../config/constants';
 import { AppState } from '../config/enum';
 import { CollisionSystem } from '../logic/collision-system';
 import { PieceBag } from '../logic/piece-bag';
@@ -108,7 +109,7 @@ export class GameController {
             this.session.board,
             piece)
         ) { 
-            this.lockActivePiece();  
+            this.startLockDelay();  
             return;           
         }
 
@@ -176,5 +177,17 @@ export class GameController {
             return false;
         }
         return true;
+    }
+
+    private startLockDelay(): void {
+        if (this.lockTimer !== null) { return; }
+        this.lockTimer = setTimeout(() => {
+            this.lockTimer = null;
+            if (this.session.state !== AppState.PLAYING) { return; }
+
+            const piece = this.session.activePieces[0];
+            if (!piece) { return; }
+            if (this.collisionSystem.isGrounded(this.session.board, piece)) { this.lockActivePiece(); }
+        }, LOCK_DELAY);
     }
 }
