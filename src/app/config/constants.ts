@@ -28,3 +28,6 @@ export const HORIZONTAL_ARR = 50; // ARR (Auto Repeat Rate): intervalo entre des
 
 export const SOFT_DROP_DAS = 100;
 export const SOFT_DROP_ARR = 30
+
+export const LOCK_DELAY = 500;
+export const MAX_LOCK_RESETS = 15;

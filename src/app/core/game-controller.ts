@@ -23,7 +23,8 @@ export class GameController {
     private collisionSystem: CollisionSystem;
     private gravityTimer: ReturnType<typeof setInterval> | null = null;
     private rotationSystem: RotationSystem;
-    
+    private lockTimer: ReturnType<typeof setTimeout> | null = null;
+    private lockResetCount = 0;
 
     constructor() {
         this.session = new GameSession();
