@@ -25,11 +25,11 @@ export class InputSystem {
         this.pressedKeys.add(event.code);
 
         switch(event.code) {
-            case 'Arrowleft':
+            case 'arrowLeft':
                 this.controller.moveActivePiece(-1, 0);
                 this.startHorizontalRepeat(-1);
                 break;
-            case 'Arrowright':
+            case 'ArrowRight':
                 this.controller.moveActivePiece(1, 0);
                 this.startHorizontalRepeat(1);
                 break;
@@ -41,20 +41,20 @@ export class InputSystem {
         this.pressedKeys.delete(event.code);
 
         const releasedDirection = 
-            event.code === 'ArrowLeft' ? -1 :
+            event.code === 'arrowLeft' ? -1 :
             event.code === 'ArrowRight' ? 1 : null;
 
         if (releasedDirection !== this.activeHorizontalDirection) { return; }
 
         this.stopHorizontalRepeat();
 
-        // if (event.code === 'Arrowleft' || event.code === 'Arrowright') { this.stopHorizontalRepeat(); }
+        // if (event.code === 'arrowLeft' || event.code === 'ArrowRight') { this.stopHorizontalRepeat(); }
 
         if (this.pressedKeys.has('ArrowRight')) {
             this.controller.moveActivePiece(1, 0);
             this.startHorizontalRepeat(1);
         }
-        else if (this.pressedKeys.has('ArrowLeft')) {
+        else if (this.pressedKeys.has('arrowLeft')) {
             this.controller.moveActivePiece(-1, 0)    ;
             this.startHorizontalRepeat(-1);
         }        
@@ -65,10 +65,11 @@ export class InputSystem {
         this.activeHorizontalDirection = deltaX;
 
         this.dasTimer = setTimeout(() => {
+            this.dasTimer = null;
             this.arrTimer = setInterval(() => {
                 this.controller.moveActivePiece(deltaX, 0);
             }, HORIZONTAL_ARR);
-        }, HORIZONTAL_DAS);
+        }, HORIZONTAL_DAS);        
     }
 
     private stopHorizontalRepeat(): void{
