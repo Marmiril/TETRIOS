@@ -105,24 +105,7 @@ export class GameController {
     // Advances the game by one gravity step.
     public tick(): void {
         if(this.session.state != AppState.PLAYING) { return; }
-
-        const piece = this.session.activePieces[0];
-        if (!piece) { return; }
-
-        if (this.collisionSystem.isGrounded(
-            this.session.board,
-            piece)
-        ) { 
-            this.startLockDelay();  
-            return;           
-        }
-
-        this.collisionSystem.movePiece(
-            this.session.board,
-            piece,
-            0,
-            1
-        );
+        this.moveActivePiece(0, 1);
     }
 
     public rotateActivePiece(clockwise: boolean): boolean {
