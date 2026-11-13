@@ -81,6 +81,7 @@ export class GameController {
             );
 
             if (this.collisionSystem.isGrounded(this.session.board, piece)) { this.startLockDelay(); }
+            else { this.stopLockDelay(); }
 
             return moved;
     }
@@ -177,4 +178,10 @@ export class GameController {
             if (this.collisionSystem.isGrounded(this.session.board, piece)) { this.lockActivePiece(); }
         }, LOCK_DELAY);
     }
-}
+
+    private stopLockDelay(): void {
+        if (this.lockTimer === null) { return; }
+        clearTimeout(this.lockTimer);
+        this.lockTimer = null;
+    }
+} 
