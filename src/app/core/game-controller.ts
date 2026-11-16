@@ -113,12 +113,15 @@ export class GameController {
         const piece = this.session.activePieces[0];
         if (!piece) { return false; }
         
-        return this.rotationSystem.tryRotate(
+        const rotated = this.rotationSystem.tryRotate(
             this.session.board,
-            piece, 
+            piece,
             this.collisionSystem,
             clockwise
         );
+
+        this.updateLockDelay(piece, rotated);
+        return rotated;
     }
 
     ///////// PRIVATE MODES //////////////////////////////////////////
