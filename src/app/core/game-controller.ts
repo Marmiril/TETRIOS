@@ -69,7 +69,7 @@ export class GameController {
         this.session.state = AppState.PLAYING;
         this.startGravity();
 
-        if (this.lockPaused = true) {
+        if (this.lockPaused) {
             this.lockPaused = false;
             this.startLockDelay();
         }
@@ -203,9 +203,13 @@ export class GameController {
     }
 
     private stopLockDelay(): void {
-        if (this.lockTimer === null) { return; }
+        if (this.lockTimer !== null) { 
         clearTimeout(this.lockTimer);
-        this.lockTimer = null;
+        this.lockTimer = null; }
+
+        this.lockDeadline = null;
+        this.lockTimeRemaining = LOCK_DELAY;
+        this.lockPaused = null;
     }
 
     private updateLockDelay(piece: Piece, canReset: boolean): void {
