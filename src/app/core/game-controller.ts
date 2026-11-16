@@ -38,6 +38,9 @@ export class GameController {
     public getSession(): GameSession { return this.session; }
 
     public startGame(): void {
+        this.stopGravity();
+        this.stopLockDelay();
+
         this.session = new GameSession();
         this.pieceBag = new PieceBag();
         this.session.state = AppState.PLAYING;
@@ -61,6 +64,7 @@ export class GameController {
         if (this.session.state !== AppState.PLAYING) return;
         this.session.state = AppState.GAME_OVER;
         this.stopGravity();
+        this.stopLockDelay();
     }
 
     // Moves the active piece if the game is running.
@@ -133,7 +137,7 @@ export class GameController {
         const piece = this.pieceFactory.createPiece(type, color);
 
         if (!this.checkCanSpawn(piece)) { return; }
-
+        this.lockResetCount = 0;
         this.session.activePieces.push(piece);
     }
 
@@ -204,4 +208,6 @@ export class GameController {
             this.startLockDelay();
         }
     }
+
+
 } 
