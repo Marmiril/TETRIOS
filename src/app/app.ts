@@ -15,16 +15,17 @@ import { HostListener } from '@angular/core';
 export class App implements OnInit {
 
     private inputSystem!: InputSystem;
+    private controller!: GameController;
 
     ngOnInit(): void {
         // const rotationSystem = new RotationSystem();
-        const controller = new GameController();
-        controller.startGame();
+        this.controller = new GameController();
+        this.controller.startGame();
         // rotationSystem.testRotation();
-        this.inputSystem = new InputSystem(controller);
+        this.inputSystem = new InputSystem(this.controller);
 
 
-        const session = controller.getSession();
+        const session = this.controller.getSession();
 
         console.log('Game state: ', session.state);
         console.log('Active pieces: ', session.activePieces);
@@ -38,6 +39,12 @@ export class App implements OnInit {
     @HostListener('window:keydown', ['$event'])
     public onKeyDown(event: KeyboardEvent): void {
         this.inputSystem.handleKeyDown(event);
+    }
+
+    @HostListener('window:blur')
+    public onWindowBlur(): void { 
+        this.inputSystem.reset();
+        this.controller.pauseGame();
     }
 
 }
