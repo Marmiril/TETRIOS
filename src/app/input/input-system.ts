@@ -41,6 +41,10 @@ export class InputSystem {
                 this.controller.moveActivePiece(0, 1);
                 this.startSoftDropRepeat();
                 break;
+            case 'Space':
+                event.preventDefault(); // Avoids the screen movement 
+                this.controller.hardDrop();
+                break;
         }
     }
 
