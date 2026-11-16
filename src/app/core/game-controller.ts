@@ -7,7 +7,7 @@
  * Ensures that state transitions only occur when permitted.
  */
 
-import { LOCK_DELAY } from '../config/constants';
+import { LOCK_DELAY, MAX_LOCK_RESETS } from '../config/constants';
 import { AppState } from '../config/enum';
 import { CollisionSystem } from '../logic/collision-system';
 import { PieceBag } from '../logic/piece-bag';
@@ -80,9 +80,23 @@ export class GameController {
                 deltaY
             );
 
-            if (this.collisionSystem.isGrounded(this.session.board, piece)) { this.startLockDelay(); }
-            else { this.stopLockDelay(); }
+            const isGrounded = this.collisionSystem.isGrounded(
+                this.session.board,
+                piece
+            );
 
+            if (!isGrounded) { this.stopLockDelay(); }
+            else if (moved &&
+                deltaX !== 0 &&
+                this.lockTimer !== null &&
+                this.lockResetCount < MAX_LOCK_RESETS
+            ) {
+                this.stopLockDelay();
+                this.lockResetCount++;
+                this.startLockDelay();
+            } else {
+                this.startLockDelay();
+            }
             return moved;
     }
 
