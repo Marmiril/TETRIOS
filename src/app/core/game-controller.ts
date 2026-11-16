@@ -108,6 +108,9 @@ export class GameController {
     public lockActivePiece(): void {
         const piece = this.session.activePieces[0];
         if (!piece) { return; }
+
+        this.stopLockDelay();
+
         this.collisionSystem.lockPiece(
             this.session.board,
             piece
@@ -210,7 +213,7 @@ export class GameController {
 
         this.lockDeadline = null;
         this.lockTimeRemaining = LOCK_DELAY;
-        this.lockPaused = null;
+        this.lockPaused = false;
     }
 
     private updateLockDelay(piece: Piece, canReset: boolean): void {
