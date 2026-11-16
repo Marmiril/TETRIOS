@@ -58,8 +58,9 @@ export class GameController {
         this.stopGravity();
 
         if (this.lockTimer !== null && this.lockDeadline !== null) {
-            this.lockTimeRemaining = Math.max(0, this.lockDeadline - Date.now());
+            const remaining = Math.max(0, this.lockDeadline - Date.now());
             this.stopLockDelay();
+            this.lockTimeRemaining = remaining
             this.lockPaused = true;
         }
     }
