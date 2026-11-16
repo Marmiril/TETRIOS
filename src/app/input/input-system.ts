@@ -84,6 +84,14 @@ export class InputSystem {
         }        
     }
 
+    public reset(): void {
+        this.stopHorizontalRepeat();
+        this.stopSoftDropRepeat();
+        this.pressedKeys.clear();
+    }
+
+    ///////// PRIVATE MODES //////////////////////////////////////////
+    
     private startHorizontalRepeat(deltaX: -1 | 1): void {
         this.stopHorizontalRepeat();
         this.activeHorizontalDirection = deltaX;
