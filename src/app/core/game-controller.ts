@@ -147,6 +147,23 @@ export class GameController {
         return rotated;
     }
 
+    public hardDrop(): void {
+        if (this.session.state != AppState.PLAYING) { return; }
+
+        const piece = this.session.activePieces[0];
+        if (!piece) { return; }
+
+        while(this.collisionSystem.movePiece(
+            this.session.board,
+            piece, 
+            0,
+            1
+        )) {}
+
+        this.lockActivePiece();
+
+    }
+
     ///////// PRIVATE MODES //////////////////////////////////////////
 
         // Generates the next tetromino and adds it to the game session.
