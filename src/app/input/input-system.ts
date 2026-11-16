@@ -45,6 +45,13 @@ export class InputSystem {
                 event.preventDefault(); // Avoids the screen movement 
                 this.controller.hardDrop();
                 break;
+            case 'ArrowUp': 
+            case 'KeyX':
+                this.controller.rotateActivePiece(true);
+                break;
+            case 'KeyZ':
+                this.controller.rotateActivePiece(false);
+                break;
         }
     }
 
