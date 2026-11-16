@@ -5,6 +5,7 @@
  */
 
 import { HORIZONTAL_ARR, HORIZONTAL_DAS, SOFT_DROP_DAS, SOFT_DROP_ARR } from '../config/constants';
+import { AppState } from '../config/enum';
 import { GameController } from '../core/game-controller';
 
 export class InputSystem {
@@ -23,6 +24,21 @@ export class InputSystem {
     constructor(private controller: GameController) {}
 
     public handleKeyDown(event: KeyboardEvent): void {
+        if (event.code === 'Escape')
+        
+            { if (event.repeat) { return; }
+            
+            const state = this.controller.getSession().state;
+            if (state === AppState.PLAYING) {
+                this.reset();
+                this.controller.pauseGame()
+            } else if (state === AppState.PAUSED) {
+                this.controller.resumeGame();
+            }
+            return;
+        }
+
+        if(this.controller.getSession().state !== AppState.PLAYING) { return; }
         
         if (this.pressedKeys.has(event.code)) return;
 
