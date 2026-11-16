@@ -29,6 +29,7 @@ export class GameController {
     private lockResetCount = 0;
     private lockTimeRemaining = LOCK_DELAY;
     private lockDeadline: number | null = null;
+    private lockPaused = false;
 
     constructor() {
         this.session = new GameSession();
@@ -57,12 +58,9 @@ export class GameController {
         this.stopGravity();
 
         if (this.lockTimer !== null && this.lockDeadline !== null) {
-            this.lockTimeRemaining = Math.max(
-                0, 
-                this.lockDeadline - Date.now()
-            );
-
+            this.lockTimeRemaining = Math.max(0, this.lockDeadline - Date.now());
             this.stopLockDelay();
+            this.lockPaused = true;
         }
     }
 
@@ -70,6 +68,11 @@ export class GameController {
         if (this.session.state !== AppState.PAUSED) { return; }
         this.session.state = AppState.PLAYING;
         this.startGravity();
+
+        if (this.lockPaused = true) {
+            this.lockPaused = false;
+            this.startLockDelay();
+        }
     }
 
     public endGame(): void {
