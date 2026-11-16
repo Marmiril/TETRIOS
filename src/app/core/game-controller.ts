@@ -198,4 +198,23 @@ export class GameController {
         clearTimeout(this.lockTimer);
         this.lockTimer = null;
     }
+
+    private updateLockDelay(piece: Piece, canReset: boolean): void {
+        const isGrounded = this.collisionSystem.isGrounded(
+            this.session.board,
+            piece
+        );
+
+        if (!isGrounded) { this.stopLockDelay(); }
+        else if (
+            canReset &&
+            this.lockTimer !== null &&
+            this.lockResetCount < MAX_LOCK_RESETS
+        ) { this.stopLockDelay();
+            this.lockResetCount++;
+            this.startLockDelay();
+        } else {
+            this.startLockDelay();
+        }
+    }
 } 
