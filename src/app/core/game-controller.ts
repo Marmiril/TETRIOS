@@ -24,8 +24,11 @@ export class GameController {
     private collisionSystem: CollisionSystem;
     private gravityTimer: ReturnType<typeof setInterval> | null = null;
     private rotationSystem: RotationSystem;
+
     private lockTimer: ReturnType<typeof setTimeout> | null = null;
     private lockResetCount = 0;
+    private lockTimeRemaining = LOCK_DELAY;
+    private lockDeadline: number | null = null;
 
     constructor() {
         this.session = new GameSession();
@@ -49,19 +52,28 @@ export class GameController {
     }
 
     public pauseGame(): void {
-        if (this.session.state != AppState.PLAYING) return;
+        if (this.session.state != AppState.PLAYING) { return; }
         this.session.state = AppState.PAUSED;
         this.stopGravity();
+
+        if (this.lockTimer !== null && this.lockDeadline !== null) {
+            this.lockTimeRemaining = Math.max(
+                0, 
+                this.lockDeadline - Date.now()
+            );
+
+            this.stopLockDelay();
+        }
     }
 
     public resumeGame(): void {
-        if (this.session.state !== AppState.PAUSED) return;
+        if (this.session.state !== AppState.PAUSED) { return; }
         this.session.state = AppState.PLAYING;
         this.startGravity();
     }
 
     public endGame(): void {
-        if (this.session.state !== AppState.PLAYING) return;
+        if (this.session.state !== AppState.PLAYING) { return; }
         this.session.state = AppState.GAME_OVER;
         this.stopGravity();
         this.stopLockDelay();
@@ -174,6 +186,9 @@ export class GameController {
 
     private startLockDelay(): void {
         if (this.lockTimer !== null) { return; }
+
+        this.lockDeadline = Date.now() + this.lockTimeRemaining;
+
         this.lockTimer = setTimeout(() => {
             this.lockTimer = null;
             if (this.session.state !== AppState.PLAYING) { return; }
@@ -181,7 +196,7 @@ export class GameController {
             const piece = this.session.activePieces[0];
             if (!piece) { return; }
             if (this.collisionSystem.isGrounded(this.session.board, piece)) { this.lockActivePiece(); }
-        }, LOCK_DELAY);
+        }, this.lockTimeRemaining);
     }
 
     private stopLockDelay(): void {
@@ -208,6 +223,4 @@ export class GameController {
             this.startLockDelay();
         }
     }
-
-
 } 
