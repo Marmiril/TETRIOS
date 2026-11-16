@@ -80,23 +80,7 @@ export class GameController {
                 deltaY
             );
 
-            const isGrounded = this.collisionSystem.isGrounded(
-                this.session.board,
-                piece
-            );
-
-            if (!isGrounded) { this.stopLockDelay(); }
-            else if (moved &&
-                deltaX !== 0 &&
-                this.lockTimer !== null &&
-                this.lockResetCount < MAX_LOCK_RESETS
-            ) {
-                this.stopLockDelay();
-                this.lockResetCount++;
-                this.startLockDelay();
-            } else {
-                this.startLockDelay();
-            }
+            this.updateLockDelay(piece, moved && deltaX !== 0);
             return moved;
     }
 
