@@ -1,4 +1,5 @@
 import { BOARD_COLUMNS, BOARD_ROWS, CELL_SIZE } from "../config/constants";
+import { GameSession } from "../models/game-session";
 import { Piece } from "../models/piece";
 
 export class CanvasRenderer { 
@@ -46,5 +47,12 @@ export class CanvasRenderer {
                 );
             }
         }
+    }
+
+    public render(session: GameSession): void {
+        this.drawBackGround();
+        this.drawGrid();
+
+        for (const piece of session.activePieces) { this.drawPiece(piece); }
     }
 }

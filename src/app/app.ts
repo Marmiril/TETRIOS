@@ -49,7 +49,7 @@ export class App implements OnInit, AfterViewInit {
         const session = this.controller.getSession();
         const piece = session.activePieces[0];
 
-        if (!piece) { this.renderer.drawPiece(piece); }
+        if (piece) { this.renderer.drawPiece(piece); }
 
     }
 
