@@ -16,6 +16,7 @@ export class App implements OnInit, AfterViewInit {
     private inputSystem!: InputSystem;
     private controller!: GameController;
     private renderer!: CanvasRenderer;
+    private animationFrameId: number | null = null;
     
     private readonly gameCanvas= viewChild.required<ElementRef<HTMLCanvasElement>>('gameCanvas');
     /*
@@ -67,6 +68,14 @@ export class App implements OnInit, AfterViewInit {
     public onWindowBlur(): void { 
         this.inputSystem.reset();
         this.controller.pauseGame();
+    }
+
+    private renderLoop(): void {
+        this.renderer.render(this.controller.getSession());
+
+        this.animationFrameId = requestAnimationFrame(() => {
+            this.renderLoop();
+        });
     }
 
 }
