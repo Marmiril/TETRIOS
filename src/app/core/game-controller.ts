@@ -77,7 +77,9 @@ export class GameController {
     }
 
     public endGame(): void {
-        if (this.session.state !== AppState.PLAYING) { return; }
+        if (this.session.state !== AppState.PLAYING &&
+            this.session.state !== AppState.PAUSED
+        ) { return; }
         this.session.state = AppState.GAME_OVER;
         this.stopGravity();
         this.stopLockDelay();
