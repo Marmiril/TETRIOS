@@ -44,13 +44,14 @@ export class App implements OnInit, AfterViewInit {
         if (!context) { throw new Error('Unable to initialize Canvas 2D context!.'); }
 
         this.renderer = new CanvasRenderer(context); // Creamos el objeto encargado de dibujar y le entregamos el contexto gráfico.
-        this.renderer.drawBackGround();
-        this.renderer.drawGrid();
+        this.renderLoop();    
+        // this.renderer.drawBackGround();
+        // this.renderer.drawGrid();
 
         const session = this.controller.getSession();
         const piece = session.activePieces[0];
 
-        if (piece) { this.renderer.drawPiece(piece); }
+        // if (piece) { this.renderer.drawPiece(piece); }
 
     }
 
@@ -69,6 +70,8 @@ export class App implements OnInit, AfterViewInit {
         this.inputSystem.reset();
         this.controller.pauseGame();
     }
+
+
 
     private renderLoop(): void {
         this.renderer.render(this.controller.getSession());
