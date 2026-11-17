@@ -74,4 +74,5 @@ export class CanvasRenderer {
 
         for (const piece of session.activePieces) { this.drawPiece(piece); }
     }
+
 }

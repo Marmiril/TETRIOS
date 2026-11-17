@@ -90,4 +90,18 @@ export class App implements OnInit, AfterViewInit {
         return this.controller.getSession().state === AppState.PAUSED;
     }
 
+    protected resumeGame(): void {
+        this.controller.resumeGame();
+    }
+
+    protected restartGame(): void {
+        this.inputSystem.reset();
+        this.controller.startGame();
+    }
+
+    protected endGame(): void {
+        this.inputSystem.reset();
+        this.controller.endGame();
+    }
+
 }

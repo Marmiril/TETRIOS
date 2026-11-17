@@ -6,9 +6,15 @@
 
     <canvas #gameCanvas width="300" height="600"> </canvas>
 
+    @if (isPaused) {
     <div class="pause-overlay">
       <h2>PAUSED</h2>
+      <button (click)="resumeGame()">RESUME</button>
+      <button (click)="restartGame()">RESTART</button>
+      <button (click)="endGame()">ENDGAME</button>
     </div>
+    }
+
 
   </div>
 
