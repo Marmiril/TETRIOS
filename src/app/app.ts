@@ -29,7 +29,6 @@ export class App implements OnInit, AfterViewInit {
 
     ngOnInit(): void {
         this.controller = new GameController();
-        this.controller.startGame();
         this.inputSystem = new InputSystem(this.controller);
 
         const session = this.controller.getSession();
@@ -46,11 +45,6 @@ export class App implements OnInit, AfterViewInit {
 
         this.renderer = new CanvasRenderer(context); // Creamos el objeto encargado de dibujar y le entregamos el contexto gráfico.
         this.renderLoop();    
-        // this.renderer.drawBackGround();
-        // this.renderer.drawGrid();
-        // const session = this.controller.getSession();
-        // const piece = session.activePieces[0];
-        // if (piece) { this.renderer.drawPiece(piece); }
     }
 
     ngOnDestroy(): void {
@@ -88,6 +82,10 @@ export class App implements OnInit, AfterViewInit {
 
     protected get isPaused(): boolean {
         return this.controller.getSession().state === AppState.PAUSED;
+    }
+
+    protected get isMainMenu(): boolean {
+        return this.controller.getSession().state === AppState.MAIN_MENU;
     }
 
     protected resumeGame(): void {
