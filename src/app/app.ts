@@ -47,13 +47,18 @@ export class App implements OnInit, AfterViewInit {
         this.renderLoop();    
         // this.renderer.drawBackGround();
         // this.renderer.drawGrid();
-
-        const session = this.controller.getSession();
-        const piece = session.activePieces[0];
-
+        // const session = this.controller.getSession();
+        // const piece = session.activePieces[0];
         // if (piece) { this.renderer.drawPiece(piece); }
-
     }
+
+    ngOnDestroy(): void {
+        if (this.animationFrameId !== null) { 
+            cancelAnimationFrame(this.animationFrameId);
+            this.animationFrameId = null;
+        }
+    }
+
 
     @HostListener('window:keyup', ['$event'])
     public onKeyUp(event: KeyboardEvent): void{
@@ -71,11 +76,10 @@ export class App implements OnInit, AfterViewInit {
         this.controller.pauseGame();
     }
 
-
+    //////////////////////////////////////////////////////////////////
 
     private renderLoop(): void {
         this.renderer.render(this.controller.getSession());
-
         this.animationFrameId = requestAnimationFrame(() => {
             this.renderLoop();
         });
