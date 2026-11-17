@@ -1,0 +1,23 @@
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.board-container {
+    position: relative; /* Convierte board-container en la referencia para posicionar el mensaje.*/
+    width: 300px;
+    height: 600px;
+}
+
+.pause-overlay {
+    position: absolute; /* Permite colocar pause-overlay encima del Canvas sin desplazarlo*/
+    inset: 0; /* Hace que la capa ocupe todo el espacio del contenedor.*/
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+}

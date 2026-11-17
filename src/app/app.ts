@@ -3,6 +3,7 @@ import { Component, OnInit, HostListener, ElementRef, viewChild, AfterViewInit }
 import { GameController } from './core/game-controller';
 import { InputSystem } from './input/input-system';
 import { CanvasRenderer } from './rendering/canvas-renderer';
+import { AppState } from './config/enum';
 
 
 @Component({
@@ -83,6 +84,10 @@ export class App implements OnInit, AfterViewInit {
         this.animationFrameId = requestAnimationFrame(() => {
             this.renderLoop();
         });
+    }
+
+    protected get isPaused(): boolean {
+        return this.controller.getSession().state === AppState.PAUSED;
     }
 
 }
