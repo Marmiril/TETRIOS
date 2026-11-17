@@ -7,7 +7,7 @@
  * Ensures that state transitions only occur when permitted.
  */
 
-import { LOCK_DELAY, MAX_LOCK_RESETS } from '../config/constants';
+import { LINE_CLEAR_POINTS, LOCK_DELAY, MAX_LOCK_RESETS } from '../config/constants';
 import { AppState } from '../config/enum';
 import { CollisionSystem } from '../logic/collision-system';
 import { PieceBag } from '../logic/piece-bag';
@@ -127,6 +127,8 @@ export class GameController {
         const clearedRows =  this.session.board.clearFullRows();
 
         this.session.lines += clearedRows;
+
+        this.session.score += LINE_CLEAR_POINTS[clearedRows] * this.session.level;
 
         this.spawnPiece();
     }
