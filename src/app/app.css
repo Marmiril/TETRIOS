@@ -10,8 +10,9 @@
     height: 600px;
 }
 
-.main-menu-overlay
-.pause-overlay {
+.main-menu-overlay,
+.pause-overlay,
+.game-over-overlay {
     position: absolute; /* Permite colocar pause-overlay encima del Canvas sin desplazarlo*/
     inset: 0; /* Hace que la capa ocupe todo el espacio del contenedor.*/
 

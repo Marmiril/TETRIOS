@@ -85,6 +85,11 @@ export class GameController {
         this.stopLockDelay();
     }
 
+    public returnToMainMenu(): void {
+        if (this.session.state !== AppState.GAME_OVER) { return; }
+        this.session.state = AppState.MAIN_MENU;
+    }
+
     // Moves the active piece if the game is running.
     public moveActivePiece(
         deltaX: number,

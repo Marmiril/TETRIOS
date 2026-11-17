@@ -80,12 +80,25 @@ export class App implements OnInit, AfterViewInit {
         });
     }
 
+
     protected get isPaused(): boolean {
         return this.controller.getSession().state === AppState.PAUSED;
     }
 
     protected get isMainMenu(): boolean {
         return this.controller.getSession().state === AppState.MAIN_MENU;
+    }
+
+    protected get isGameOver(): boolean{
+        return this.controller.getSession().state === AppState.GAME_OVER;
+    }
+    
+    protected returnToMainMenu(): void {
+        this.controller.returnToMainMenu();
+    }
+
+    protected startGame(): void {
+        this.controller.startGame();
     }
 
     protected resumeGame(): void {
