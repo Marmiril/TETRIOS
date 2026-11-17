@@ -42,7 +42,9 @@ export class App implements OnInit, AfterViewInit {
 
         if (!context) { throw new Error('Unable to initialize Canvas 2D context!.'); }
 
-        this.renderer = new CanvasRenderer(context);
+        this.renderer = new CanvasRenderer(context); // Creamos el objeto encargado de dibujar y le entregamos el contexto gráfico.
+        this.renderer.drawBackGround();
+        this.renderer.drawGrid();
     }
 
     @HostListener('window:keyup', ['$event'])
