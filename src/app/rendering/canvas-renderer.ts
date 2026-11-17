@@ -71,6 +71,7 @@ export class CanvasRenderer {
     public render(session: GameSession): void {
         this.drawBackGround();
         this.drawGrid();
+        this.drawBoard(session.board);
 
         for (const piece of session.activePieces) { this.drawPiece(piece); }
     }
