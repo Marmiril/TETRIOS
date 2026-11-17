@@ -1,4 +1,5 @@
 import { BOARD_COLUMNS, BOARD_ROWS, CELL_SIZE } from "../config/constants";
+import { Board } from "../models/board";
 import { GameSession } from "../models/game-session";
 import { Piece } from "../models/piece";
 
@@ -8,7 +9,6 @@ export class CanvasRenderer {
 
     public drawBackGround(): void {
         this.context.fillStyle = '#000000';
-
         this.context.fillRect(
             0,
             0,
@@ -19,10 +19,29 @@ export class CanvasRenderer {
 
     public drawGrid(): void {
         this.context.strokeStyle = '#333333';
-
         for (let row = 0; row < BOARD_ROWS; row++) {
             for (let col = 0; col < BOARD_COLUMNS; col++) {
                 this.context.strokeRect(
+                    col * CELL_SIZE,
+                    row * CELL_SIZE,
+                    CELL_SIZE,
+                    CELL_SIZE
+                );
+            }
+        }
+    }
+
+    public drawBoard(board: Board): void {
+        const grid = board.getGrid();
+        for (let row = 0; row < grid.length; row++) {
+            for (let col = 0; col < grid[row].length; col++) {
+                const color = grid[row][col];
+
+                if (color === null) { continue; }
+
+                this.context.fillStyle = color;
+
+                this.context.fillRect(
                     col * CELL_SIZE,
                     row * CELL_SIZE,
                     CELL_SIZE,
