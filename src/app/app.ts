@@ -2,6 +2,7 @@
 import { Component, OnInit, HostListener, ElementRef, viewChild, AfterViewInit } from '@angular/core';
 import { GameController } from './core/game-controller';
 import { InputSystem } from './input/input-system';
+import { CanvasRenderer } from './rendering/canvas-renderer';
 
 
 @Component({
@@ -14,7 +15,8 @@ export class App implements OnInit, AfterViewInit {
 
     private inputSystem!: InputSystem;
     private controller!: GameController;
-
+    private renderer!: CanvasRenderer;
+    
     private readonly gameCanvas= viewChild.required<ElementRef<HTMLCanvasElement>>('gameCanvas');
     /*
     viewChild.required(): busca el elemento identificado mediante #gameCanvas en la plantilla y establece que debe existir.
@@ -39,6 +41,8 @@ export class App implements OnInit, AfterViewInit {
         const context = canvas.getContext('2d'); // Solicita el contexto gráfico bidimensional.
 
         if (!context) { throw new Error('Unable to initialize Canvas 2D context!.'); }
+
+        this.renderer = new CanvasRenderer(context);
     }
 
     @HostListener('window:keyup', ['$event'])
