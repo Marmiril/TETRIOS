@@ -53,7 +53,6 @@ export class CanvasRenderer {
 
     public drawPiece(piece: Piece): void{
         this.context.fillStyle = piece.color;
-
         for (let row = 0; row < piece.shape.length; row++) {
             for (let col = 0; col < piece.shape[row].length; col++) {
                 if (piece.shape[row][col] === 0) { continue; }
