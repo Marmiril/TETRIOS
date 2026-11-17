@@ -1,10 +1,8 @@
 
-import { Component, OnInit } from '@angular/core';
-
-import { RotationSystem } from './logic/rotation-system';
+import { Component, OnInit, HostListener, ElementRef, viewChild } from '@angular/core';
 import { GameController } from './core/game-controller';
 import { InputSystem } from './input/input-system';
-import { HostListener } from '@angular/core';
+
 
 @Component({
     imports: [],
@@ -16,6 +14,8 @@ export class App implements OnInit {
 
     private inputSystem!: InputSystem;
     private controller!: GameController;
+
+    private readonly gameCanvas= viewChild.required<ElementRef<HTMLCanvasElement>>('gameCanvas');
 
     ngOnInit(): void {
         // const rotationSystem = new RotationSystem();
