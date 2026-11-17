@@ -45,6 +45,12 @@ export class App implements OnInit, AfterViewInit {
         this.renderer = new CanvasRenderer(context); // Creamos el objeto encargado de dibujar y le entregamos el contexto gráfico.
         this.renderer.drawBackGround();
         this.renderer.drawGrid();
+
+        const session = this.controller.getSession();
+        const piece = session.activePieces[0];
+
+        if (!piece) { this.renderer.drawPiece(piece); }
+
     }
 
     @HostListener('window:keyup', ['$event'])
