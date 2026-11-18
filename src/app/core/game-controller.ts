@@ -175,12 +175,16 @@ export class GameController {
         const piece = this.session.activePieces[0];
         if (!piece) { return; }
 
+        let droppedCells = 0;
+
         while(this.collisionSystem.movePiece(
             this.session.board,
             piece, 
             0,
             1
-        )) {}
+        )) { droppedCells++; }
+
+        this.session.score += droppedCells * 2;
 
         this.lockActivePiece();
 
