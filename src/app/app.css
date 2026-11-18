@@ -25,6 +25,18 @@
     flex-direction: column;
 }
 
+.next-piece-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 24px;
+}
+
+.next-piece-display canvas {
+    background-color: #000;
+}
+
 .main-menu-overlay,
 .pause-overlay,
 .game-over-overlay {
