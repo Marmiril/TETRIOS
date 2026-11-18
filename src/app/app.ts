@@ -17,9 +17,11 @@ export class App implements OnInit, AfterViewInit {
     private inputSystem!: InputSystem;
     private controller!: GameController;
     private renderer!: CanvasRenderer;
+    private nextPieceRenderer!: CanvasRenderer;
     private animationFrameId: number | null = null;
     
-    private readonly gameCanvas= viewChild.required<ElementRef<HTMLCanvasElement>>('gameCanvas');
+    private readonly gameCanvas = viewChild.required<ElementRef<HTMLCanvasElement>>('gameCanvas');
+    private readonly nextPieceCanvas  = viewChild.required<ElementRef<HTMLCanvasElement>>('nextPieceCanvas');
 
     protected readonly score = signal(0);
     protected readonly level = signal(1);
@@ -54,6 +56,14 @@ export class App implements OnInit, AfterViewInit {
         if (!context) { throw new Error('Unable to initialize Canvas 2D context!.'); }
 
         this.renderer = new CanvasRenderer(context); // Creamos el objeto encargado de dibujar y le entregamos el contexto gráfico.
+         
+        // Initialize an independent rendering context for the next-piece preview
+        const nextCanvas = this.nextPieceCanvas().nativeElement;
+        const nextContext = nextCanvas.getContext('2d');
+        if (!nextContext) { throw new Error('Unable to initialize next-piece Canvas 2D context.')};
+
+        this.nextPieceRenderer = new CanvasRenderer(nextContext);
+
         this.renderLoop();    
     }
 
@@ -83,6 +93,16 @@ export class App implements OnInit, AfterViewInit {
     //////////////////////////////////////////////////////////////////
 
     private renderLoop(): void {
+        const session = this.controller.getSession();
+
+        // Render th board and the upcoming piece using sepsarate camvas contexts.
+        this.renderer.render(session);
+        this.nextPieceRenderer.renderNextPiece(session.nextPiece);
+
+        this.animationFrameId = requestAnimationFrame(() => {
+            this.renderLoop();
+        });
+
         this.renderer.render(this.controller.getSession());
         this.animationFrameId = requestAnimationFrame(() => {
             this.renderLoop();
