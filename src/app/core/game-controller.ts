@@ -31,7 +31,10 @@ export class GameController {
     private lockDeadline: number | null = null;
     private lockPaused = false;
 
-    constructor(private readonly onScoreChanged: (score: number) => void) {
+    constructor(
+        private readonly onScoreChanged: (score: number) => void,
+        private readonly onLevelChanged: (level: number) => void
+    ) {
         this.session = new GameSession();
         this.pieceBag = new PieceBag();
         this.pieceFactory = new PieceFactory();
@@ -46,6 +49,7 @@ export class GameController {
         this.stopLockDelay();
 
         this.session = new GameSession();
+        this.onLevelChanged(this.session.level);
         this.onScoreChanged(this.session.score);
 
         this.pieceBag = new PieceBag();
@@ -283,6 +287,10 @@ export class GameController {
     }
 
     private updateLevel(): void {
-        this.session.level = Math.floor(this.session.lines / 10) + 1;
+        const newLevel = Math.floor(this.session.lines / 10) + 1;
+        if (newLevel === this.session.level) { return; }
+        
+        this.session.level = newLevel;
+        this.onLevelChanged(newLevel);
     }
 } 

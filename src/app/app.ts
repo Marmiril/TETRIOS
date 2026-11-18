@@ -22,6 +22,7 @@ export class App implements OnInit, AfterViewInit {
     private readonly gameCanvas= viewChild.required<ElementRef<HTMLCanvasElement>>('gameCanvas');
 
     protected readonly score = signal(0);
+    protected readonly level = signal(1);
     /*
     viewChild.required(): busca el elemento identificado mediante #gameCanvas en la plantilla y establece que debe existir.
     ElementRef: proporciona acceso al elemento HTML real.
@@ -30,7 +31,10 @@ export class App implements OnInit, AfterViewInit {
     */
 
     ngOnInit(): void {
-        this.controller = new GameController((score: number) => {this.score.set(score); });
+        this.controller = new GameController(
+            (score: number) => this.score.set(score), 
+            (level: number) => this.level.set(level)
+        );
         this.inputSystem = new InputSystem(this.controller);
 
         const session = this.controller.getSession();
@@ -94,9 +98,6 @@ export class App implements OnInit, AfterViewInit {
         return this.controller.getSession().state === AppState.GAME_OVER;
     }
 
-    protected get currentLevel(): number {
-        return this.controller.getSession().level;
-    }
 /*
     protected get score(): number {
         return this.controller.getSession().score;
