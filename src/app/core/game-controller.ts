@@ -33,7 +33,8 @@ export class GameController {
 
     constructor(
         private readonly onScoreChanged: (score: number) => void,
-        private readonly onLevelChanged: (level: number) => void
+        private readonly onLevelChanged: (level: number) => void,
+        private readonly onLinesChanged: (lines: number) => void
     ) {
         this.session = new GameSession();
         this.pieceBag = new PieceBag();
@@ -51,6 +52,7 @@ export class GameController {
         this.session = new GameSession();
         this.onLevelChanged(this.session.level);
         this.onScoreChanged(this.session.score);
+        this.onLinesChanged(this.session.lines);
 
         this.pieceBag = new PieceBag();
         this.session.state = AppState.PLAYING;
@@ -135,6 +137,7 @@ export class GameController {
         const clearedRows =  this.session.board.clearFullRows();
 
         this.session.lines += clearedRows;
+        if (clearedRows > 0) { this.onLinesChanged(this.session.lines); }
 
         this.session.score += LINE_CLEAR_POINTS[clearedRows] * this.session.level;
 
@@ -220,6 +223,8 @@ export class GameController {
     // Starts the automatic gravity timer.
     private startGravity(): void {
         if (this.gravityTimer !== null) { clearInterval(this.gravityTimer); }
+
+        console.log(`Level: ${this.session.level} | Fall interval: ${this.session.fallInterval} ms`);
 
         this.gravityTimer = setInterval(
             () => this.tick(),
