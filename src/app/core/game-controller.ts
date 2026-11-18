@@ -185,6 +185,7 @@ export class GameController {
         )) { droppedCells++; }
 
         this.session.score += droppedCells * 2;
+        this.onScoreChanged(this.session.score);
 
         this.lockActivePiece();
 
