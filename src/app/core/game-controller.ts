@@ -212,14 +212,18 @@ export class GameController {
 
         // Generates the next tetromino and adds it to the game session.
     private spawnPiece(): void {
-        const type = this.pieceBag.nextType();
-        const color = this.pieceFactory.colorPiece();
-        const piece = this.pieceFactory.createPiece(type, color);
+        const piece = this.session.nextPiece ??
+            this.pieceFactory.createPiece(this.pieceBag.nextType(), this.pieceFactory.colorPiece());
 
         if (!this.checkCanSpawn(piece)) { return; }
+
         this.lockResetCount = 0;
         this.session.activePieces.push(piece);
         this.session.piecesSpawned++;
+
+        this.onPieceSpawned(this.session.piecesSpawned);
+
+        this.session.nextPiece = this.pieceFactory.createPiece(this.pieceBag.nextType(), this.pieceFactory.colorPiece());
     }
 
     // Starts the automatic gravity timer.

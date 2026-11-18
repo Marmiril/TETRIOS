@@ -11,11 +11,12 @@ export class GameSession {
 
     public board: Board;
     public activePieces: Piece[];
+    public nextPiece: Piece | null;
 
     public score: number;
     public lines: number;
     public level: number;
-    public piecesSpawned: number;
+    public piecesSpawned: number;    
     public fallInterval: number;
 
     constructor() {
@@ -25,6 +26,7 @@ export class GameSession {
 
         this.board = new Board();
         this.activePieces = [];
+        this.nextPiece = null;
 
         this.score = 0;
         this.lines = 0;
