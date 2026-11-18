@@ -134,7 +134,10 @@ export class GameController {
 
         this.session.score += LINE_CLEAR_POINTS[clearedRows] * this.session.level;
 
-        if (clearedRows > 0) { this.onScoreChanged(this.session.score); }
+        if (clearedRows > 0) {
+            this.onScoreChanged(this.session.score);
+            this.updateLevel();
+        }
 
         this.spawnPiece();
     }
@@ -277,5 +280,9 @@ export class GameController {
         } else {
             this.startLockDelay();
         }
+    }
+
+    private updateLevel(): void {
+        this.session.level = Math.floor(this.session.lines / 10) + 1;
     }
 } 
