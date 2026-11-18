@@ -7,6 +7,8 @@ export const CELL_SIZE = 30;
 /* Game configuration */
 export const DEFAULT_DIFFICULTY = 1;
 export const BASE_FALL_INTERVAL = 1000; // Milliseconds
+export const FALL_INTERVAL_DECREMENT = 100;
+export const MAX_LEVEL = 10;
 
 /* Piece configuration */
 export const DEFAULT_SPEED_MULTIPLIER = 1;
