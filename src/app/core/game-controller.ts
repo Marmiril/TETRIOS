@@ -31,7 +31,7 @@ export class GameController {
     private lockDeadline: number | null = null;
     private lockPaused = false;
 
-    constructor() {
+    constructor(private readonly onScoreChanged: (score: number) => void) {
         this.session = new GameSession();
         this.pieceBag = new PieceBag();
         this.pieceFactory = new PieceFactory();
@@ -129,6 +129,8 @@ export class GameController {
         this.session.lines += clearedRows;
 
         this.session.score += LINE_CLEAR_POINTS[clearedRows] * this.session.level;
+
+        if (clearedRows > 0) { this.onScoreChanged(this.session.score); }
 
         this.spawnPiece();
     }

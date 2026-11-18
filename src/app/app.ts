@@ -30,7 +30,7 @@ export class App implements OnInit, AfterViewInit {
     */
 
     ngOnInit(): void {
-        this.controller = new GameController();
+        this.controller = new GameController((score: number) => {this.score.set(score); });
         this.inputSystem = new InputSystem(this.controller);
 
         const session = this.controller.getSession();

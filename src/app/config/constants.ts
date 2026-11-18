@@ -32,4 +32,4 @@ export const SOFT_DROP_ARR = 30
 export const LOCK_DELAY = 500;
 export const MAX_LOCK_RESETS = 15;
 
-export const LINE_CLEAR_POINTS = [0, 100, 200, 300, 500, 800] as const;
+export const LINE_CLEAR_POINTS = [0, 100, 300, 500, 800] as const;
