@@ -54,7 +54,7 @@ export class InputSystem {
                 this.startHorizontalRepeat(1);
                 break;
             case 'ArrowDown': 
-                this.controller.moveActivePiece(0, 1);
+                this.controller.softDrop();
                 this.startSoftDropRepeat();
                 break;
             case 'Space':
@@ -141,7 +141,7 @@ export class InputSystem {
             this.softDropDasTimer = null;
 
             this.softDropArrTimer = setInterval(() => {
-                this.controller.moveActivePiece(0, 1);
+                this.controller.softDrop();
             }, SOFT_DROP_ARR);
         }, SOFT_DROP_DAS)
     }

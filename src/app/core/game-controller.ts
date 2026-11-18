@@ -46,10 +46,14 @@ export class GameController {
         this.stopLockDelay();
 
         this.session = new GameSession();
+        this.onScoreChanged(this.session.score);
+
         this.pieceBag = new PieceBag();
         this.session.state = AppState.PLAYING;
+        
         this.spawnPiece();
         this.startGravity();
+        
     }
 
     public pauseGame(): void {
@@ -156,6 +160,13 @@ export class GameController {
 
         this.updateLockDelay(piece, rotated);
         return rotated;
+    }
+
+    public softDrop(): void {
+        const moved = this.moveActivePiece(0, 1);
+        if (!moved) { return; }
+        this.session.score += 1;
+        this.onScoreChanged(this.session.score);
     }
 
     public hardDrop(): void {
