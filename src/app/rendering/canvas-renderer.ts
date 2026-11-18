@@ -75,4 +75,34 @@ export class CanvasRenderer {
         for (const piece of session.activePieces) { this.drawPiece(piece); }
     }
 
+    public renderNextPiece(piece: Piece | null): void {
+        const { canvas } = this.context;
+
+        this.context.clearRect(0, 0, canvas.width, canvas.height);
+        
+        if (!piece) { return; }
+        
+        const cellSize = 24;
+        const shape = piece.shape;
+
+        const offsetX = (canvas.width - shape[0].length * cellSize) / 2;
+        const offsetY = (canvas.height - shape[0].length * cellSize) / 2;
+
+        this.context.fillStyle = piece.color;
+
+        // Render occupied cells using preview coordinates instead of board coordintes.
+        for (let row = 0; row < shape.length; row++) {
+            for (let col = 0; col < shape[row].length; col++) {
+                if (shape[row][col] === 0) { continue; }
+                
+                this.context.fillRect(
+                    offsetX + col * cellSize,
+                    offsetY + row * cellSize,
+                    cellSize,
+                    cellSize
+                )
+            }
+        }
+    }
+
 }
