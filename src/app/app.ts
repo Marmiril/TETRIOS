@@ -1,5 +1,5 @@
 
-import { Component, OnInit, HostListener, ElementRef, viewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, HostListener, ElementRef, viewChild, AfterViewInit, signal } from '@angular/core';
 import { GameController } from './core/game-controller';
 import { InputSystem } from './input/input-system';
 import { CanvasRenderer } from './rendering/canvas-renderer';
@@ -20,6 +20,8 @@ export class App implements OnInit, AfterViewInit {
     private animationFrameId: number | null = null;
     
     private readonly gameCanvas= viewChild.required<ElementRef<HTMLCanvasElement>>('gameCanvas');
+
+    protected readonly score = signal(0);
     /*
     viewChild.required(): busca el elemento identificado mediante #gameCanvas en la plantilla y establece que debe existir.
     ElementRef: proporciona acceso al elemento HTML real.
@@ -92,7 +94,11 @@ export class App implements OnInit, AfterViewInit {
     protected get isGameOver(): boolean{
         return this.controller.getSession().state === AppState.GAME_OVER;
     }
-    
+/*
+    protected get score(): number {
+        return this.controller.getSession().score;
+    }
+*/    
     protected returnToMainMenu(): void {
         this.controller.returnToMainMenu();
     }

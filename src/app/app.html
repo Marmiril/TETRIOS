@@ -1,6 +1,10 @@
 <main class="game-container">
   <h1>TETRIOS</h1>
 
+  <div class="score-display">
+    <span>SCORE: {{ score() }}</span>
+  </div>
+
 
   <div class="board-container">
 
@@ -26,6 +30,7 @@
     @if (isGameOver) {
     <div class="game-over-overlay">
       <h2>GAME OVER</h2>
+      <p>SCORE: {{ score }}</p>
       <button (click)="returnToMainMenu()">MAIN MENU</button>
     </div>
     }
