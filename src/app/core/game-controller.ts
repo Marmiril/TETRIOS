@@ -7,7 +7,7 @@
  * Ensures that state transitions only occur when permitted.
  */
 
-import { LINE_CLEAR_POINTS, LOCK_DELAY, MAX_LOCK_RESETS } from '../config/constants';
+import { BASE_FALL_INTERVAL, FALL_INTERVAL_DECREMENT, LINE_CLEAR_POINTS, LOCK_DELAY, MAX_LEVEL, MAX_LOCK_RESETS } from '../config/constants';
 import { AppState } from '../config/enum';
 import { CollisionSystem } from '../logic/collision-system';
 import { PieceBag } from '../logic/piece-bag';
@@ -140,6 +140,12 @@ export class GameController {
 
         if (clearedRows > 0) {
             this.onScoreChanged(this.session.score);
+
+            if (this.session.lines >= MAX_LEVEL * 10) {
+                this.endGame();
+                return;
+            }
+
             this.updateLevel();
         }
 
@@ -292,5 +298,13 @@ export class GameController {
         
         this.session.level = newLevel;
         this.onLevelChanged(newLevel);
+
+        this.updateFallInterval();
+        this.startGravity();
+
+    }
+
+    private updateFallInterval(): void {
+        this.session.fallInterval = BASE_FALL_INTERVAL - (this.session.level - 1) * FALL_INTERVAL_DECREMENT;
     }
 } 
