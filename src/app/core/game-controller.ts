@@ -34,7 +34,8 @@ export class GameController {
     constructor(
         private readonly onScoreChanged: (score: number) => void,
         private readonly onLevelChanged: (level: number) => void,
-        private readonly onLinesChanged: (lines: number) => void
+        private readonly onLinesChanged: (lines: number) => void,
+        private readonly onPieceSpawned: (piece: number) => void
     ) {
         this.session = new GameSession();
         this.pieceBag = new PieceBag();
@@ -218,6 +219,7 @@ export class GameController {
         if (!this.checkCanSpawn(piece)) { return; }
         this.lockResetCount = 0;
         this.session.activePieces.push(piece);
+        this.session.piecesSpawned++;
     }
 
     // Starts the automatic gravity timer.

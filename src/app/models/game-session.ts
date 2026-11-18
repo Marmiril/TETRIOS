@@ -15,6 +15,7 @@ export class GameSession {
     public score: number;
     public lines: number;
     public level: number;
+    public piecesSpawned: number;
     public fallInterval: number;
 
     constructor() {
@@ -28,6 +29,7 @@ export class GameSession {
         this.score = 0;
         this.lines = 0;
         this.level = 1;
+        this.piecesSpawned = 0;
         this.fallInterval = BASE_FALL_INTERVAL;
     }
 }

@@ -24,6 +24,7 @@ export class App implements OnInit, AfterViewInit {
     protected readonly score = signal(0);
     protected readonly level = signal(1);
     protected readonly lines = signal(0);
+    protected readonly pieces = signal(0);
     /*
     viewChild.required(): busca el elemento identificado mediante #gameCanvas en la plantilla y establece que debe existir.
     ElementRef: proporciona acceso al elemento HTML real.
@@ -35,7 +36,8 @@ export class App implements OnInit, AfterViewInit {
         this.controller = new GameController(
             (score: number) => this.score.set(score), 
             (level: number) => this.level.set(level),
-            (lines: number) => this.lines.set(lines)
+            (lines: number) => this.lines.set(lines),
+            (pieces: number) => this.pieces.set(pieces)
         );
         this.inputSystem = new InputSystem(this.controller);
 
