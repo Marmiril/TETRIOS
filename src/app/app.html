@@ -1,42 +1,49 @@
 <main class="game-container">
   <h1>TETRIOS</h1>
 
-  <div class="score-display">
-    <span>SCORE: {{ score() }}</span>
+  <div class="game-layout">
+
+    <div class="score-display">
+      <span>SCORE: {{ score() }} </span>
+    </div>
+
+    <div class="board-container">
+
+      <canvas #gameCanvas width="300" height="600"> </canvas>
+
+      @if (isMainMenu) {
+      <div class="main-menu-overlay">
+        <h2>MAIN MENU</h2>
+        <button (click)="startGame()">START GAME</button>
+        <button>WALL OF FAME</button>
+      </div>
+      }
+
+      @if (isPaused) {
+      <div class="pause-overlay">
+        <h2>PAUSED</h2>
+        <button (click)="resumeGame()">RESUME</button>
+        <button (click)="restartGame()">RESTART</button>
+        <button (click)="endGame()">ENDGAME</button>
+      </div>
+      }
+
+      @if (isGameOver) {
+      <div class="game-over-overlay">
+        <h2>GAME OVER</h2>
+        <p>SCORE: {{ score() }}</p>
+        <button (click)="returnToMainMenu()">MAIN MENU</button>
+      </div>
+      }
+    </div>
+
+    <div class="level-display">
+      <span>LEVEL: </span>
+    </div>
+
   </div>
 
 
-  <div class="board-container">
-
-    <canvas #gameCanvas width="300" height="600"> </canvas>
-
-    @if (isMainMenu) {
-    <div class="main-menu-overlay">
-      <h2>MAIN MENU</h2>
-      <button (click)="startGame()">START GAME</button>
-      <button>WALL OF FAME</button>
-    </div>
-    }
-
-    @if (isPaused) {
-    <div class="pause-overlay">
-      <h2>PAUSED</h2>
-      <button (click)="resumeGame()">RESUME</button>
-      <button (click)="restartGame()">RESTART</button>
-      <button (click)="endGame()">ENDGAME</button>
-    </div>
-    }
-
-    @if (isGameOver) {
-    <div class="game-over-overlay">
-      <h2>GAME OVER</h2>
-      <p>SCORE: {{ score() }}</p>
-      <button (click)="returnToMainMenu()">MAIN MENU</button>
-    </div>
-    }
-
-
-  </div>
 
 
 

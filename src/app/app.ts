@@ -56,7 +56,6 @@ export class App implements OnInit, AfterViewInit {
         }
     }
 
-
     @HostListener('window:keyup', ['$event'])
     public onKeyUp(event: KeyboardEvent): void{
         this.inputSystem.handleKeyUp(event);
@@ -93,6 +92,10 @@ export class App implements OnInit, AfterViewInit {
 
     protected get isGameOver(): boolean{
         return this.controller.getSession().state === AppState.GAME_OVER;
+    }
+
+    protected get currentLevel(): number {
+        return this.controller.getSession().level;
     }
 /*
     protected get score(): number {

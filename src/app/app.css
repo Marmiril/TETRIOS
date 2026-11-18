@@ -4,10 +4,23 @@
     align-items: center;
 }
 
+.game-layout {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 24px;
+}
+
 .board-container {
     position: relative; /* Convierte board-container en la referencia para posicionar el mensaje.*/
     width: 300px;
     height: 600px;
+}
+
+.score-display,
+.level-display {
+    width: 120px;
+    text-align: center;
 }
 
 .main-menu-overlay,
