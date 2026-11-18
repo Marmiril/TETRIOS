@@ -36,6 +36,17 @@
         <button (click)="returnToMainMenu()">MAIN MENU</button>
       </div>
       }
+
+      @if (isVictory) {
+      <div class="victory-overlay">
+        <h2>MIGHTY VICTORY</h2>
+        <p>CONGRATULATIONS!!</p>
+        <p>SCORE: {{ score() }}</p>
+        <p>LINES: {{ lines() }}</p>
+        <p>PIECES: {{ pieces() }}</p>
+        <button (click)="returnToMainMenu()">MAIN MENU</button>
+      </div>
+      }
     </div>
 
     <div class="level-display">

@@ -4,6 +4,7 @@ export enum AppState {
     PLAYING = 'PLAYING',
     PAUSED = 'PAUSED',
     GAME_OVER = 'GAME_OVER',
+    VICTORY = 'VICTORY',
     RECORDS = 'RECORDS',
     SETTINGS = 'SETTINGS'
 }

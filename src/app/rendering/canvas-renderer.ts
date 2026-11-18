@@ -86,7 +86,7 @@ export class CanvasRenderer {
         const shape = piece.shape;
 
         const offsetX = (canvas.width - shape[0].length * cellSize) / 2;
-        const offsetY = (canvas.height - shape[0].length * cellSize) / 2;
+        const offsetY = (canvas.height - shape.length * cellSize) / 2;
 
         this.context.fillStyle = piece.color;
 

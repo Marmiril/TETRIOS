@@ -99,11 +99,7 @@ export class App implements OnInit, AfterViewInit {
         this.renderer.render(session);
         this.nextPieceRenderer.renderNextPiece(session.nextPiece);
 
-        this.animationFrameId = requestAnimationFrame(() => {
-            this.renderLoop();
-        });
-
-        this.renderer.render(this.controller.getSession());
+        // Schedule a single rendering cycle for the next animation frame
         this.animationFrameId = requestAnimationFrame(() => {
             this.renderLoop();
         });
@@ -118,8 +114,12 @@ export class App implements OnInit, AfterViewInit {
         return this.controller.getSession().state === AppState.MAIN_MENU;
     }
 
-    protected get isGameOver(): boolean{
+    protected get isGameOver(): boolean {
         return this.controller.getSession().state === AppState.GAME_OVER;
+    }
+
+    protected get isVictory(): boolean {
+        return this.controller.getSession().state === AppState.VICTORY;
     }
 
 /*

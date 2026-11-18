@@ -87,7 +87,7 @@ export class GameController {
         }
     }
 
-    public endGame(): void {
+    public endGame(result: AppState.GAME_OVER | AppState.VICTORY = AppState.GAME_OVER): void {
         if (this.session.state !== AppState.PLAYING &&
             this.session.state !== AppState.PAUSED
         ) { return; }
@@ -97,7 +97,7 @@ export class GameController {
     }
 
     public returnToMainMenu(): void {
-        if (this.session.state !== AppState.GAME_OVER) { return; }
+        if (this.session.state !== AppState.GAME_OVER && this.session.state !== AppState.VICTORY) { return; }
         this.session.state = AppState.MAIN_MENU;
     }
 
@@ -146,7 +146,7 @@ export class GameController {
             this.onScoreChanged(this.session.score);
 
             if (this.session.lines >= MAX_LEVEL * 10) {
-                this.endGame();
+                this.endGame(AppState.VICTORY);
                 return;
             }
 
