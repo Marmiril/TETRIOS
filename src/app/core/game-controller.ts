@@ -35,7 +35,8 @@ export class GameController {
         private readonly onScoreChanged: (score: number) => void,
         private readonly onLevelChanged: (level: number) => void,
         private readonly onLinesChanged: (lines: number) => void,
-        private readonly onPieceSpawned: (piece: number) => void
+        private readonly onPieceSpawned: (piece: number) => void,
+        private readonly onStateChanged: (state: AppState) => void = () => {}
     ) {
         this.session = new GameSession();
         this.pieceBag = new PieceBag();
@@ -92,6 +93,7 @@ export class GameController {
             this.session.state !== AppState.PAUSED
         ) { return; }
         this.session.state = result;
+        this.onStateChanged(result);
         this.stopGravity();
         this.stopLockDelay();
     }
@@ -266,12 +268,19 @@ export class GameController {
 
         this.lockTimer = setTimeout(() => {
             this.lockTimer = null;
+
+            // Preserve the expired state until the piece can be locked
+            this.lockTimeRemaining = 0;
+            this.lockDeadline = null;
+
+           
             if (this.session.state !== AppState.PLAYING) { return; }
 
             const piece = this.session.activePieces[0];
             if (!piece) { return; }
             if (this.collisionSystem.isGrounded(this.session.board, piece)) { this.lockActivePiece(); }
         }, this.lockTimeRemaining);
+
     }
 
     private stopLockDelay(): void {
@@ -292,7 +301,7 @@ export class GameController {
 
         if (!isGrounded) {
             // Preserve the remaining lock time when the piece becomes airborne.
-            if (this.lockTimer !== null && this.lockDeadline !== null) {
+/*          if (this.lockTimer !== null && this.lockDeadline !== null) {
                 this.lockTimeRemaining = Math.max(
                     0,
                     this.lockDeadline - Date.now()
@@ -302,7 +311,7 @@ export class GameController {
                 this.lockTimer = null;
                 this.lockDeadline = null;
             }
-            return;
+*/            return;
         }
 
         if (

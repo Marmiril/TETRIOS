@@ -4,12 +4,22 @@
   <div class="game-layout">
 
     <div class="score-display">
-      <div class="stat-label">
-        <span>SCORE: {{ score() }} </span>
+      <!-- Individual containers for game statistics. -->
+      <div class="stat-box">
+        <span>SCORE</span>
+        <span>{{ score() }}</span>
       </div>
 
-      <span>LINES: {{ lines() }}</span>
-      <span>PIECES: {{ pieces() }}</span>
+      <div class="stat-box">
+        <span>LINES</span>
+        <span>{{ lines() }}</span>
+      </div>
+
+      <div class="stat-box">
+        <span>PIECES</span>
+        <span>{{ pieces() }}</span>
+      </div>
+
     </div>
 
     <div class="board-container">
