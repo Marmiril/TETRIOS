@@ -69,6 +69,9 @@ export class GameController {
     public pauseGame(): void {
         if (this.session.state != AppState.PLAYING) { return; }
         this.session.state = AppState.PAUSED;
+        // Notify Angular that the game has been paused.
+        this.onStateChanged(AppState.PAUSED);
+
         this.stopGravity();
 
         if (this.lockTimer !== null && this.lockDeadline !== null) {
@@ -82,6 +85,9 @@ export class GameController {
     public resumeGame(): void {
         if (this.session.state !== AppState.PAUSED) { return; }
         this.session.state = AppState.PLAYING;
+        // Notify Angular that the game has resumed
+        this.onStateChanged(AppState.PLAYING);
+
         this.startGravity();
 
         if (this.lockPaused) {
@@ -103,6 +109,9 @@ export class GameController {
     public returnToMainMenu(): void {
         if (this.session.state !== AppState.GAME_OVER && this.session.state !== AppState.VICTORY) { return; }
         this.session.state = AppState.MAIN_MENU;
+
+        // Notify Angluar that the main menu is now active.
+        this.onStateChanged(AppState.MAIN_MENU);
     }
 
     // Moves the active piece if the game is running.

@@ -37,11 +37,11 @@ export class App implements OnInit, AfterViewInit {
 
     ngOnInit(): void {
         this.controller = new GameController(
-            (score: number) => this.score.set(score), 
-            (level: number) => this.level.set(level),
-            (lines: number) => this.lines.set(lines),
-            (pieces: number) => this.pieces.set(pieces),
-            (state: AppState) => this.gameState.set(state)
+            (score:  number)   => this.score    .set (score), 
+            (level:  number)   => this.level    .set (level),
+            (lines:  number)   => this.lines    .set (lines),
+            (pieces: number)   => this.pieces   .set(pieces),
+            (state:  AppState) => this.gameState.set (state)
         );
         this.inputSystem = new InputSystem(this.controller);
 
@@ -108,12 +108,13 @@ export class App implements OnInit, AfterViewInit {
     }
 
     protected get isPaused(): boolean {
-       // return this.controller.getSession().state === AppState.PAUSED;
-       return this.gameState() === AppState.MAIN_MENU;
+       // return this.controller.getSession().state === AppState.PAUSED;       
+       return this.gameState() === AppState.PAUSED;
     }
 
     protected get isMainMenu(): boolean {
-        return this.controller.getSession().state === AppState.MAIN_MENU;
+        // return this.controller.getSession().state === AppState.MAIN_MENU;
+        return this.gameState() === AppState.MAIN_MENU;
     }
 /*
     protected get isGameOver(): boolean {
