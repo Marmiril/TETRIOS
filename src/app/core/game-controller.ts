@@ -58,6 +58,8 @@ export class GameController {
 
         this.pieceBag = new PieceBag();
         this.session.state = AppState.PLAYING;
+        // Notify Angular that the game has started.
+        this.onStateChanged(AppState.PLAYING);
         
         this.spawnPiece();
         this.startGravity();

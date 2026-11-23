@@ -27,6 +27,7 @@ export class App implements OnInit, AfterViewInit {
     protected readonly level = signal(1);
     protected readonly lines = signal(0);
     protected readonly pieces = signal(0);
+    protected readonly gameState = signal<AppState>(AppState.MAIN_MENU)
     /*
     viewChild.required(): busca el elemento identificado mediante #gameCanvas en la plantilla y establece que debe existir.
     ElementRef: proporciona acceso al elemento HTML real.
@@ -39,7 +40,8 @@ export class App implements OnInit, AfterViewInit {
             (score: number) => this.score.set(score), 
             (level: number) => this.level.set(level),
             (lines: number) => this.lines.set(lines),
-            (pieces: number) => this.pieces.set(pieces)
+            (pieces: number) => this.pieces.set(pieces),
+            (state: AppState) => this.gameState.set(state)
         );
         this.inputSystem = new InputSystem(this.controller);
 
@@ -105,22 +107,28 @@ export class App implements OnInit, AfterViewInit {
         });
     }
 
-
     protected get isPaused(): boolean {
-        return this.controller.getSession().state === AppState.PAUSED;
+       // return this.controller.getSession().state === AppState.PAUSED;
+       return this.gameState() === AppState.MAIN_MENU;
     }
 
     protected get isMainMenu(): boolean {
         return this.controller.getSession().state === AppState.MAIN_MENU;
     }
-
+/*
     protected get isGameOver(): boolean {
         return this.controller.getSession().state === AppState.GAME_OVER;
+    }
+*/
+    protected get isGameOver(): boolean {
+        return this.gameState() === AppState.GAME_OVER;
     }
 
     protected get isVictory(): boolean {
         return this.controller.getSession().state === AppState.VICTORY;
     }
+
+
 
 /*
     protected get score(): number {
