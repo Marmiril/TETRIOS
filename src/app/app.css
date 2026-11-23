@@ -17,7 +17,25 @@
     height: 600px;
 }
 
-.score-display,
+/* Separate the statistics panels vertically. */
+.score-display {
+    gap: 20px;
+}
+
+/* Individual statistics container. */
+.stat-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin: 2rem;
+    color: #ffffff;
+    padding: 16px 10px;
+    background-color: #1c1c1c;
+    border: 1px solid #444;
+    border-radius: 8px;
+}
+
 .level-display {
     width: 120px;
     text-align: center;
