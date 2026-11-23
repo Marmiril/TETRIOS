@@ -91,7 +91,7 @@ export class GameController {
         if (this.session.state !== AppState.PLAYING &&
             this.session.state !== AppState.PAUSED
         ) { return; }
-        this.session.state = AppState.GAME_OVER;
+        this.session.state = result;
         this.stopGravity();
         this.stopLockDelay();
     }
@@ -290,17 +290,31 @@ export class GameController {
             piece
         );
 
-        if (!isGrounded) { this.stopLockDelay(); }
-        else if (
-            canReset &&
+        if (!isGrounded) {
+            // Preserve the remaining lock time when the piece becomes airborne.
+            if (this.lockTimer !== null && this.lockDeadline !== null) {
+                this.lockTimeRemaining = Math.max(
+                    0,
+                    this.lockDeadline - Date.now()
+                );
+
+                clearTimeout(this.lockTimer);
+                this.lockTimer = null;
+                this.lockDeadline = null;
+            }
+            return;
+        }
+
+        if (
+            canReset && 
             this.lockTimer !== null &&
             this.lockResetCount < MAX_LOCK_RESETS
-        ) { this.stopLockDelay();
+        ) {
+            // Reset the lock delay only while the reset limimt allows it.
+            this.stopLockDelay();
             this.lockResetCount++;
-            this.startLockDelay();
-        } else {
-            this.startLockDelay();
-        }
+        } 
+        this.startLockDelay();
     }
 
     private updateLevel(): void {
