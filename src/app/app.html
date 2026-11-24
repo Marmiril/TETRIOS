@@ -63,9 +63,16 @@
     </div>
 
     <div class="level-display">
-      <span>LEVEL: {{ level() }}</span>
-      <div class="next-piece-display">
-        <span>NEXT PIECE</span>
+
+      <!-- Current game level. -->
+      <div class="stat-box">
+        <span class="stat-label">LEVEL</span>
+        <span class="stat-value">{{ level() }}</span>
+      </div>
+
+      <!-- Preview of the upcoming tetromino. -->
+      <div class="stat-box next-piece-display">
+        <span class="stat-label">NEXT PIECE</span>
         <canvas #nextPieceCanvas width="120" height="120"></canvas>
       </div>
     </div>
