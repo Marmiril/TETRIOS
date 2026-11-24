@@ -47,6 +47,23 @@
     border-radius: 0.5rem;
 }
 
+
+/* Statistics labels */
+.stat-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1rem;
+    color: #aaaaaa;
+}
+
+/* Highlight the numerical values */
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    font-variant-numeric: tabular-nums;
+}
+
 /* RIGHT PANEL - LEVEL AND NEXT PIECE */
 .level-display {
     width: 7.5rem;
