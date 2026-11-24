@@ -65,5 +65,26 @@ export class ScoreRepository {
 
         return true;
     }
+
+    // Validates the structure of an individual stored record.
+    private isValidRecord(record: unknown): record is ScoreRecord {
+        if (typeof record !== 'object' || record == null) { return false; }
+
+        const candidate = record as Partial<ScoreRecord>;
+
+        return (
+            typeof candidate.initials === 'string' &&
+            candidate.initials.length === 3 &&
+            typeof candidate.score === 'number' &&
+            typeof candidate.level === 'number' &&
+            typeof candidate.lines === 'number' &&
+            typeof candidate.pieces === 'number' &&
+            (
+                candidate.result === AppState.GAME_OVER ||
+                candidate.result === AppState.VICTORY
+            )
+        );
+        
+    }
 }
 
