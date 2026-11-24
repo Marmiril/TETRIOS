@@ -10,12 +10,24 @@ export class ScoreRepository {
     public getRecords(): ScoreRecord[] {
         const storedRecords = localStorage.getItem(this.storageKey);
 
-        if (storedRecords === null) {
-            const defaultRecords = this.createDefaultRecords();
-            this.saveRecords(defaultRecords);
-            return defaultRecords;
+        if (storedRecords !== null) {
+            try {
+                const records: unknown = JSON.parse(storedRecords);
+
+                if (Array.isArray(records) && 
+                    records.length === this.maxRecords &&
+                    records.every(record => this.isValidRecord(record))
+                ) {
+                    return records.sort((a, b) => b.score - a.score);
+                }
+            } catch (error) {
+                console.warn('Invalid stored ranking.', error);
+            }
         }
-        return JSON.parse(storedRecords) as ScoreRecord[];
+        // Restore the default ranking if sorted data is missing or invalid
+        const defaultRecords = this.createDefaultRecords();
+
+        return defaultRecords;    
     }
 
     // Generates the initial ranking in descending score order.
