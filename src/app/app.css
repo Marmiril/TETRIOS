@@ -4,6 +4,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    /* Increase the visual scale of the entire game interface */
+    zoom: 1.20;
 }
 
 /* GAME LAYOUT */
@@ -19,6 +22,14 @@
     position: relative; /* Convierte board-container en la referencia para posicionar el mensaje.*/
     width: 300px;
     height: 600px;
+
+    /* Visual frame without changing the board dimensions. */
+    outline: 2px solid #444;
+    outline-offset: 4px;
+    border-radius: 2px;
+
+    /* Sublte depth effect around the board */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
 }
 
 /* LEFT PANEL - STATISTICS */
