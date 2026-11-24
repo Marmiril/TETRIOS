@@ -4,6 +4,7 @@ import { GameController } from './core/game-controller';
 import { InputSystem } from './input/input-system';
 import { CanvasRenderer } from './rendering/canvas-renderer';
 import { AppState } from './config/enum';
+import { ScoreRepository } from './repository/score-repository';
 
 
 @Component({
@@ -22,7 +23,10 @@ export class App implements OnInit, AfterViewInit {
     
     private readonly gameCanvas = viewChild.required<ElementRef<HTMLCanvasElement>>('gameCanvas');
     private readonly nextPieceCanvas  = viewChild.required<ElementRef<HTMLCanvasElement>>('nextPieceCanvas');
-
+    private readonly scoreRepository = new ScoreRepository();
+    
+    // Indicates whether the completed game qualifies for the ranking
+    protected readonly hasHighScore = signal(false);
     protected readonly score = signal(0);
     protected readonly level = signal(1);
     protected readonly lines = signal(0);
@@ -41,7 +45,7 @@ export class App implements OnInit, AfterViewInit {
             (level:  number)   => this.level    .set (level),
             (lines:  number)   => this.lines    .set (lines),
             (pieces: number)   => this.pieces   .set(pieces),
-            (state:  AppState) => this.gameState.set (state)
+            (state:  AppState) => this.handleStateChanged(state)
         );
         this.inputSystem = new InputSystem(this.controller);
 
@@ -129,8 +133,6 @@ export class App implements OnInit, AfterViewInit {
         return this.controller.getSession().state === AppState.VICTORY;
     }
 
-
-
 /*
     protected get score(): number {
         return this.controller.getSession().score;
@@ -158,4 +160,17 @@ export class App implements OnInit, AfterViewInit {
         this.controller.endGame();
     }
 
+    protected handleStateChanged(state: AppState): void {
+        this.gameState.set(state);
+
+        // Only completed games qualify for the ranking
+        if (state === AppState.GAME_OVER || state === AppState.VICTORY) {
+            const session = this.controller.getSession();
+
+            this.hasHighScore.set(this.scoreRepository.isHighScore(session.score));
+        } else {
+            this.hasHighScore.set(false);
+        }
+
+    }
 }
