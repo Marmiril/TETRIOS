@@ -1,1 +1,69 @@
 import { ScoreRecord } from '../models/score-records';
+import { AppState } from '../config/enum';
+
+export class ScoreRepository {
+
+    private readonly storageKey = 'tetrios-record';
+    private readonly maxRecords = 15;
+
+    // Retrieves stored recores or initializes the default ranking
+    public getRecords(): ScoreRecord[] {
+        const storedRecords = localStorage.getItem(this.storageKey);
+
+        if (storedRecords === null) {
+            const defaultRecords = this.createDefaultRecords();
+            this.saveRecords(defaultRecords);
+            return defaultRecords;
+        }
+        return JSON.parse(storedRecords) as ScoreRecord[];
+    }
+
+    // Generates the initial ranking in descending score order.
+    private createDefaultRecords(): ScoreRecord[] {
+        return Array.from(
+            { length: this.maxRecords },
+            (_, index): ScoreRecord => ({
+                initials: 'CPU',
+                score: (this.maxRecords - index) * 1000,
+                level: 1,
+                lines: 0,
+                pieces: 0, 
+                result: AppState.GAME_OVER
+            })
+        );
+    }
+
+    // Serializes and persists the ranking.
+    private saveRecords(records: ScoreRecord[]): void {
+        localStorage.setItem(
+            this.storageKey,
+            JSON.stringify(records)
+        );
+    }
+
+    // Checks whether a score exceeds the lowest ranked score.
+    public isHighScore(score: number): boolean {
+        const records = this.getRecords();
+        const lowestScore = records[records.length - 1].score;
+
+        return score > lowestScore;
+    }
+
+    // Adds a qualifying record and preserves the top scores.
+
+    public addRecord(record: ScoreRecord): boolean {
+        if (!this.isHighScore(record.score)) { return false; }
+
+        const records = this.getRecords();
+        records.push(record);
+
+        // Sort recores by score in descending order.
+        records.sort((a, b) => b.score - a.score);
+
+        // Keep only the highest-ranked records
+        this.saveRecords(records.slice(0, this.maxRecords));
+
+        return true;
+    }
+}
+
