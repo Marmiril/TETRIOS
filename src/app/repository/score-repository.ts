@@ -27,6 +27,7 @@ export class ScoreRepository {
         }
         // Restore the default ranking if sorted data is missing or invalid
         const defaultRecords = this.createDefaultRecords();
+        this.saveRecords(defaultRecords);
 
         return defaultRecords;    
     }

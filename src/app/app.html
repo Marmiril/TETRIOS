@@ -97,12 +97,14 @@
 
           <tbody>
             @for (record of records(); track $index) {
-            <td>{{ $index + 1}}</td>
-            <td>{{ record.initials }}</td>
-            <td>{{ record.score }}</td>
-            <td>{{ record.level }}</td>
-            <td>{{ record.lines }}</td>
-            <td>{{ record.pieces }}</td>
+            <tr>
+              <td>{{ $index + 1}}</td>
+              <td>{{ record.initials }}</td>
+              <td>{{ record.score }}</td>
+              <td>{{ record.level }}</td>
+              <td>{{ record.lines }}</td>
+              <td>{{ record.pieces }}</td>
+            </tr>
             }
           </tbody>
         </table>

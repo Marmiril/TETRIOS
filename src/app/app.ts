@@ -120,9 +120,9 @@ export class App implements OnInit, AfterViewInit {
 
     protected get isGameOver(): boolean { return this.gameState() === AppState.GAME_OVER; }
 
-    protected get isVictory(): boolean { return this.controller.getSession().state === AppState.VICTORY; }
+    protected get isVictory(): boolean { return this.gameState() === AppState.VICTORY; }
 
-    protected get isRecords(): boolean { return this.controller.getSession().state === AppState.RECORDS; }
+    protected get isRecords(): boolean { return this.gameState() === AppState.RECORDS; }
 
     protected returnToMainMenu(): void { this.controller.returnToMainMenu(); }
 
