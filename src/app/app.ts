@@ -35,7 +35,7 @@ export class App implements OnInit, AfterViewInit {
     protected readonly gameState = signal<AppState>(AppState.MAIN_MENU)
     protected readonly playerInitials = signal('');
     protected readonly records = signal<ScoreRecord[]>([]);
-    protected readonly colorPiece = signal<string>('#00C8FF');
+    protected readonly activePieceColor = signal<string>('#00C8FF');
     /*
     viewChild.required(): busca el elemento identificado mediante #gameCanvas en la plantilla y establece que debe existir.
     ElementRef: proporciona acceso al elemento HTML real.
@@ -47,13 +47,19 @@ export class App implements OnInit, AfterViewInit {
         this.controller = new GameController(
             (score:  number)   => this.score    .set (score), 
             (level:  number)   => this.level    .set (level),
-            (lines:  number)   => this.lines    .set (lines),
-            (pieces: number)   => this.pieces   .set(pieces),
-            (state:  AppState) => this.handleStateChanged(state)
+            (lines:  number)   => this.lines    .set (lines),            
+            (pieces: number)   => {
+                this.pieces.set(pieces);
+                // Update the board lighting with the active piece color
+                const activePiece = this.controller.getSession().activePieces[0];
+                if (activePiece) { this.activePieceColor.set(activePiece.color)};
+            },
+            (state:  AppState) => this.handleStateChanged(state),
         );
         this.inputSystem = new InputSystem(this.controller);
 
         const session = this.controller.getSession();
+
 
         console.log('Game state: ', session.state);
         console.log('Active pieces: ', session.activePieces);

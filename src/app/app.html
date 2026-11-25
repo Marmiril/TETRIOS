@@ -22,7 +22,7 @@
 
     </div>
 
-    <div class="board-container">
+    <div class="board-container" [style.--neon-color]="activePieceColor()">
       <canvas #gameCanvas width="300" height="600"> </canvas>
 
       @if (isMainMenu) {
