@@ -74,6 +74,7 @@
         <input #initialsInput id="player-initials" type="text" maxlength="3" placeholder="AAA"
           [value]="playerInitials()" (input)="updateInitials(initialsInput.value)">
 
+        <button (click)="saveRecord()" [disabled]="playerInitials().length !== 3">SAVE RECORD</button>
         <button (click)="returnToMainMenu()">MAIN MENU</button>
       </div>
       }

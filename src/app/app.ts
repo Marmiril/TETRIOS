@@ -5,6 +5,7 @@ import { InputSystem } from './input/input-system';
 import { CanvasRenderer } from './rendering/canvas-renderer';
 import { AppState } from './config/enum';
 import { ScoreRepository } from './repository/score-repository';
+import { ScoreRecord } from './models/score-records';
 
 
 @Component({
@@ -182,4 +183,38 @@ export class App implements OnInit, AfterViewInit {
                 .slice(0, 3)
         );
     }
+
+    protected saveRecord(): void {
+        if (!this.hasHighScore) { return; }
+
+        const initials = this.playerInitials();
+        const session = this.controller.getSession();
+
+        // Validate player initials
+        if (!/^[A-Z]{3}$/.test(initials)) { return; }
+
+        // Ensure that the game has finished
+        if (
+            session.state !== AppState.GAME_OVER &&
+            session.state !== AppState.VICTORY            
+        ) { 
+            return;
+        }
+
+        const record: ScoreRecord = {
+            initials: initials,
+            score: session.score,
+            level: session.level,
+            lines: session.lines,
+            pieces: session.piecesSpawned,
+            result: session.state
+        };
+
+        if (this.scoreRepository.addRecord(record)) {
+            this.scoreRepository.savePlayerInitials(initials);
+            this.returnToMainMenu();
+        }
+    }
+
+
 }

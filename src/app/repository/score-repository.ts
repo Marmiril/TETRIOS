@@ -57,9 +57,9 @@ export class ScoreRepository {
     // Checks whether a score exceeds the lowest ranked score.
     public isHighScore(score: number): boolean {
         const records = this.getRecords();
-        const lowestScore = records.at(-1).score;
-
-        return score > lowestScore;
+        const lowestRecord = records.at(-1);
+        if (!lowestRecord) { return false}
+        return score > lowestRecord.score;
     }
 
     // Adds a qualifying record and preserves the top scores.
@@ -101,7 +101,7 @@ export class ScoreRepository {
 
     // Retrieves the last registered player initials.
     public getPlayerInitials(): string {
-        return localStorage.getItem(this.initialsKey);
+        return localStorage.getItem(this.initialsKey) ?? '';
     }
 
     // Persists the last registered player initials.
