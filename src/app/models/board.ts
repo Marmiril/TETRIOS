@@ -70,7 +70,7 @@ export class Board {
     }
 
     // Returns the indexes of all completed rows without removing them.
-    public getFullRow(): number[] {
+    public getFullRows(): number[] {
         const fullRows: number[] = [];
         for (let row = 0; row < BOARD_ROWS; row++) {
             if (this.isRowFull(row)) {

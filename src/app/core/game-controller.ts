@@ -155,8 +155,16 @@ export class GameController {
             this.session.board,
             piece
         );
-        this.session.activePieces.shift();
 
+
+        this.session.activePieces.shift();
+        
+        // Identify completed rows before removing thme
+        const fullRows = this.session.board.getFullRows();
+
+        if (fullRows.length > 0) {
+            this.session.clearingRows = fullRows;
+        }
         const clearedRows =  this.session.board.clearFullRows();
 
         this.session.lines += clearedRows;

@@ -19,6 +19,8 @@ export class GameSession {
     public piecesSpawned: number;    
     public fallInterval: number;
 
+    public clearingRows: number[] = [];
+
     constructor() {
         this.state = AppState.MAIN_MENU;
         this.mode = GameMode.CLASSIC;
