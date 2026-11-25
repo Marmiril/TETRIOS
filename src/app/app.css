@@ -130,47 +130,52 @@
 
     background-color: rgba(0, 0, 0, 0.6);
     color: white;
+    animation: neon-border-pulse 3s ease-in-out infinite;
 }
 
 .main-menu-overlay {
     --neon-color: 0, 200, 255;
-    animation: neon-border-pulse 3s ease-in-out infinite;
+    
 }
 .main-menu-overlay button{
     --neon-color: 150, 100, 010;
-    animation: neon-border-pulse 3s ease-in-out infinite;
+    
 }
 .pause-overlay {
     --neon-color: 0, 200, 255;
-    animation: neon-border-pulse 3s ease-in-out infinite;
+    
 }
 .pause-overlay button{
     --neon-color: 150, 100, 010;
-    animation: neon-border-pulse 3s ease-in-out infinite;
+    
 }
 .game-over-overlay {
     --neon-color: 255, 36, 0;
-    animation: neon-border-pulse 3s ease-in-out infinite;
+    
 }
 .game-over-overlay button{
     --neon-color: 220, 20, 60;
-    animation: neon-border-pulse 3s ease-in-out infinite;
+    
 }
 .victory-overlay {
     --neon-color: 255, 200, 0;
-    animation: neon-border-pulse 3s ease-in-out infinite;
+    
 }
 .victory-overlay button{
     --neon-color: 220, 20, 60;
-    animation: neon-border-pulse 3s ease-in-out infinite;
+    
 }
 .records-overlay {
     --neon-color: 255, 200, 0;
-    animation: neon-border-pulse 3s ease-in-out infinite;
+   
 }
 .records-overlay button{
     --neon-color: 0, 0, 250;
-    animation: neon-border-pulse 3s ease-in-out infinite;
+   
+}
+.board-container {
+    --neon-color: 220, 20, 60;
+        animation: neon-border-pulse 3s ease-in-out infinite;
 }
 
 
