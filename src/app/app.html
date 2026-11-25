@@ -82,6 +82,30 @@
       @if (isRecords) {
       <div class="records-overlay">
         <h2>WALL OF FAME</h2>
+
+        <table class="records-table">
+          <thead>
+            <tr>
+              <th>POS</th>
+              <th>NAME</th>
+              <th>SCORE</th>
+              <th>LVL</th>
+              <th>LINES</th>
+              <th>PIECES</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (record of records(); track $index) {
+            <td>{{ $index + 1}}</td>
+            <td>{{ record.initials }}</td>
+            <td>{{ record.score }}</td>
+            <td>{{ record.level }}</td>
+            <td>{{ record.lines }}</td>
+            <td>{{ record.pieces }}</td>
+            }
+          </tbody>
+        </table>
         <button (click)="returnToMainMenu()">MAIN MENU</button>
       </div>
       }
