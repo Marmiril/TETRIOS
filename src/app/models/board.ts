@@ -69,6 +69,17 @@ export class Board {
         return this.grid[row].every(cell => cell !== null);
     }
 
+    // Returns the indexes of all completed rows without removing them.
+    public getFullRow(): number[] {
+        const fullRows: number[] = [];
+        for (let row = 0; row < BOARD_ROWS; row++) {
+            if (this.isRowFull(row)) {
+                fullRows.push(row);
+            }
+        }
+        return fullRows;
+    }
+
     // Removes completed rows and shifts the remaining rows downward -- Returns the number of cleared rows.
     public clearFullRows(): number {
         let clearedRows = 0;

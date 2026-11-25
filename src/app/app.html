@@ -125,7 +125,9 @@
       <!-- Preview of the upcoming tetromino. -->
       <div class="stat-box next-piece-display">
         <span class="stat-label">NEXT PIECE</span>
-        <canvas #nextPieceCanvas width="120" height="120"></canvas>
+        <canvas #nextPieceCanvas width="120" height="120" [style.--current-level]="level()"
+          [style.animation-play-state]="isPaused ? 'paused' : 'running'">
+        </canvas>
       </div>
     </div>
 

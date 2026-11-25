@@ -110,6 +110,12 @@
     width: 100%;
     height: auto;
     background-color: #000;
+    background-image:
+        linear-gradient(#333333 0.5px, transparent 0.5px),
+        linear-gradient(90deg,#333333 0.5px, transparent 0.5px);
+    background-size: 20% 20%;
+
+    animation: grid-scroll calc(0.99s / (1 + (var(--current-level, 1) - 1) * 0.3)) linear infinite;
 }
 
 /* GAME OVERLAYS */
@@ -267,4 +273,9 @@
             0 0 20px color-mix(in srgb, var(--neon-color) 80%, transparent),
             0 0 40px color-mix(in srgb, var(--neon-color) 60%, transparent);
     }
+}
+
+@keyframes grid-scroll {
+    from { background-position: 0 25%; }
+    to { background-position: 0 0; }
 }
