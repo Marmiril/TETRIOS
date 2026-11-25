@@ -83,7 +83,6 @@ export class Board {
     // Removes completed rows and shifts the remaining rows downward -- Returns the number of cleared rows.
     public clearFullRows(): number {
         let clearedRows = 0;
-
         for (let row = BOARD_ROWS - 1; row >= 0; row--) {
             if (this.isRowFull(row)) {
                 this.grid.splice(row, 1);
