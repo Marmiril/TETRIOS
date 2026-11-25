@@ -70,7 +70,7 @@
     background-color: #1c1c1c;
     border: 1px solid #444;
     border-radius: 0.5rem;
-    --neon-color: 255, 0, 255;
+    --neon-color: #FF00FF;
     animation: neon-border-pulse 3s ease-in-out infinite;
     
 }
@@ -133,16 +133,16 @@
     animation: neon-border-pulse 3s ease-in-out infinite;
 }
 
-.main-menu-overlay {--neon-color: 0, 200, 255;}
-.main-menu-overlay button{--neon-color: 150, 100, 010;}
-.pause-overlay {--neon-color: 0, 200, 255;}
-.pause-overlay button{--neon-color: 150, 100, 010;}
-.game-over-overlay {--neon-color: 255, 36, 0;}
-.game-over-overlay button{--neon-color: 220, 20, 60;}
-.victory-overlay {--neon-color: 255, 200, 0;}
-.victory-overlay button{--neon-color: 220, 20, 60;}
-.records-overlay {--neon-color: 255, 200, 0;}
-.records-overlay button{--neon-color: 0, 0, 250;}
+.main-menu-overlay {--neon-color: #00C8FF;}
+.main-menu-overlay button{--neon-color: #96640A;}
+.pause-overlay {--neon-color:#00C8FF;}
+.pause-overlay button{--neon-color: #96640A;}
+.game-over-overlay {--neon-color: #FF2400;}
+.game-over-overlay button{--neon-color: #DC143C;}
+.victory-overlay {--neon-color: #FFC800;}
+.victory-overlay button{--neon-color: #DC143C;}
+.records-overlay {--neon-color: #FFC800;}
+.records-overlay button{--neon-color:	#0000FA;}
 .board-container {animation: neon-border-pulse 3s ease-in-out infinite;}
 
 
@@ -241,15 +241,15 @@
 @keyframes neon-pulse {
     0%, 100% {
         text-shadow:
-            0 0 5px color-mix(in srgb, var(--neon-color), 40%, transparent),
-            0 0 10px color-mix(in srgb, var(--neon-color), 20%, transparent),
+            0 0 5px color-mix(in srgb, var(--neon-color) 40%, transparent),
+            0 0 10px color-mix(in srgb, var(--neon-color) 20%, transparent);
     }
 
     50% {
         text-shadow:
             0 0 10px var(--neon-color),
-            0 0 20px color-mix(in srgb, var(--neon-color), 80%, transparent),
-            0 0 40px color-mix(in srgb, var(--neon-color), 60%, transparent);
+            0 0 20px color-mix(in srgb, var(--neon-color) 80%, transparent),
+            0 0 40px color-mix(in srgb, var(--neon-color) 60%, transparent);
     }
 }
 
@@ -257,14 +257,14 @@
 @keyframes neon-border-pulse {
     0%, 100% {
         box-shadow:
-            0 0 5px color-mix(in srgb, var(--neon-color), 40%, transparent),
-            0 0 10px color-mix(in srgb, var(--neon-color), 20%, transparent);
+            0 0 5px color-mix(in srgb, var(--neon-color) 40%, transparent),
+            0 0 10px color-mix(in srgb, var(--neon-color) 20%, transparent);
     }
 
     50% {
         box-shadow:
             0 0 10px var(--neon-color),
-            0 0 20px color-mix(in srgb, var(--neon-color), 80%, transparent),
-            0 0 40px color-mix(in srgb, var(--neon-color), 60%, transparent);
+            0 0 20px color-mix(in srgb, var(--neon-color) 80%, transparent),
+            0 0 40px color-mix(in srgb, var(--neon-color) 60%, transparent);
     }
 }
