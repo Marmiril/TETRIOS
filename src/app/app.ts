@@ -33,7 +33,7 @@ export class App implements OnInit, AfterViewInit {
     protected readonly lines = signal(0);
     protected readonly pieces = signal(0);
     protected readonly gameState = signal<AppState>(AppState.MAIN_MENU)
-    protected readonly playerInitials = signal(this.scoreRepository.getPlayerInitials());
+    protected readonly playerInitials = signal('');
     protected readonly records = signal<ScoreRecord[]>([]);
     /*
     viewChild.required(): busca el elemento identificado mediante #gameCanvas en la plantilla y establece que debe existir.
@@ -151,7 +151,8 @@ export class App implements OnInit, AfterViewInit {
         // Only completed games qualify for the ranking
         if (state === AppState.GAME_OVER || state === AppState.VICTORY) {
             const session = this.controller.getSession();
-
+            // Clear the initials for each compelted 
+            this.playerInitials.set('');
             this.hasHighScore.set(this.scoreRepository.isHighScore(session.score));
         } else {
             this.hasHighScore.set(false);
@@ -194,7 +195,7 @@ export class App implements OnInit, AfterViewInit {
         };
 
         if (this.scoreRepository.addRecord(record)) {
-            this.scoreRepository.savePlayerInitials(initials);
+           // this.scoreRepository.savePlayerInitials(initials);
             this.returnToMainMenu();
         }
     }

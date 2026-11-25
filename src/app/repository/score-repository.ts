@@ -99,7 +99,7 @@ export class ScoreRepository {
             )
         );        
     }
-
+/*
     // Retrieves the last registered player initials.
     public getPlayerInitials(): string {
         return localStorage.getItem(this.initialsKey) ?? '';
@@ -109,5 +109,6 @@ export class ScoreRepository {
     public savePlayerInitials(initials: string): void {
         localStorage.setItem(this.initialsKey, initials);
     }
+*/
 }
 
