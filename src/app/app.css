@@ -151,3 +151,44 @@
     background-color: #24506a;
     box-shadow: 0 0 12px rgba(0, 200, 255, 0.5);
 }
+
+/* WALL OF FAME */
+/* Prevent the game board from interfering with ranking readability. */
+.records-overlay {
+    background-color: rgba(0, 0, 0, 0.95);
+}
+
+.records-overlay h2 {
+    color: #00c8ff;
+    font-size: 1.5rem;
+    letter-spacing: 0.1rem;
+    text-shadow: 0 0 10px rgba(0, 200, 255, 0.5);
+}
+
+/* Compacte rangkintable adapted to the board dimensions. */
+.records-table {
+    width: 96%;
+    border-collapse: collapse;
+    font-size: 0.7rem;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 1rem;
+}
+
+/* Table column headers */
+.records-table th {
+    padding: 0.5rem 0.15rem;
+    color: #00c8ff;
+    border-bottom: 1px solid #00c8ff;
+}
+
+/* Individual ranking cells */
+.records-table td {
+    padding: 0.45rem 0.15rem;
+    border-bottom: 1px solid #333;
+}
+
+/* Alternate row backgrounds to improve readability. */
+.records-table tbody tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.05);
+}
