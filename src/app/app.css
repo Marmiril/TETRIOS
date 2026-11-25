@@ -112,6 +112,7 @@
 .pause-overlay,
 .game-over-overlay,
 .victory-overlay,
+.records-overlay,
 .high-score-overlay {
     position: absolute; /* Permite colocar pause-overlay encima del Canvas sin desplazarlo*/
     inset: 0; /* Hace que la capa ocupe todo el espacio del contenedor.*/

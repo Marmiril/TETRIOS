@@ -34,6 +34,7 @@ export class App implements OnInit, AfterViewInit {
     protected readonly pieces = signal(0);
     protected readonly gameState = signal<AppState>(AppState.MAIN_MENU)
     protected readonly playerInitials = signal(this.scoreRepository.getPlayerInitials());
+    protected readonly records = signal<ScoreRecord[]>([]);
     /*
     viewChild.required(): busca el elemento identificado mediante #gameCanvas en la plantilla y establece que debe existir.
     ElementRef: proporciona acceso al elemento HTML real.
@@ -113,44 +114,26 @@ export class App implements OnInit, AfterViewInit {
         });
     }
 
-    protected get isPaused(): boolean {
-       // return this.controller.getSession().state === AppState.PAUSED;       
-       return this.gameState() === AppState.PAUSED;
-    }
+    protected get isPaused(): boolean { return this.gameState() === AppState.PAUSED; }
 
-    protected get isMainMenu(): boolean {
-        // return this.controller.getSession().state === AppState.MAIN_MENU;
-        return this.gameState() === AppState.MAIN_MENU;
-    }
-/*
-    protected get isGameOver(): boolean {
-        return this.controller.getSession().state === AppState.GAME_OVER;
-    }
-*/
-    protected get isGameOver(): boolean {
-        return this.gameState() === AppState.GAME_OVER;
-    }
+    protected get isMainMenu(): boolean { return this.gameState() === AppState.MAIN_MENU; }
 
-    protected get isVictory(): boolean {
-        return this.controller.getSession().state === AppState.VICTORY;
-    }
+    protected get isGameOver(): boolean { return this.gameState() === AppState.GAME_OVER; }
 
-/*
-    protected get score(): number {
-        return this.controller.getSession().score;
-    }
-*/    
-    protected returnToMainMenu(): void {
-        this.controller.returnToMainMenu();
-    }
+    protected get isVictory(): boolean { return this.controller.getSession().state === AppState.VICTORY; }
 
-    protected startGame(): void {
-        this.controller.startGame();
-    }
+    protected get isRecords(): boolean { return this.controller.getSession().state === AppState.RECORDS; }
 
-    protected resumeGame(): void {
-        this.controller.resumeGame();
-    }
+    protected returnToMainMenu(): void { this.controller.returnToMainMenu(); }
+
+    protected startGame(): void { this.controller.startGame(); }
+
+    protected resumeGame(): void { this.controller.resumeGame(); }
+
+    protected openRecords(): void {
+        // Retrieve the latest ranking before openin the records screen
+        this.records.set(this.scoreRepository.getRecords());
+        this.controller.openRecords(); }
 
     protected restartGame(): void {
         this.inputSystem.reset();
@@ -185,7 +168,7 @@ export class App implements OnInit, AfterViewInit {
     }
 
     protected saveRecord(): void {
-        if (!this.hasHighScore) { return; }
+        if (!this.hasHighScore()) { return; }
 
         const initials = this.playerInitials();
         const session = this.controller.getSession();

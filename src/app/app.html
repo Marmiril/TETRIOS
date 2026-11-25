@@ -29,7 +29,7 @@
       <div class="main-menu-overlay">
 
         <button (click)="startGame()">START GAME</button>
-        <button>WALL OF FAME</button>
+        <button (click)="openRecords()">WALL OF FAME</button>
       </div>
       }
 
@@ -78,6 +78,14 @@
         <button (click)="returnToMainMenu()">MAIN MENU</button>
       </div>
       }
+
+      @if (isRecords) {
+      <div class="records-overlay">
+        <h2>WALL OF FAME</h2>
+        <button (click)="returnToMainMenu()">MAIN MENU</button>
+      </div>
+      }
+
     </div>
 
     <div class="level-display">

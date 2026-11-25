@@ -66,6 +66,13 @@ export class GameController {
         
     }
 
+    public openRecords(): void {
+        if (this.session.state !== AppState.MAIN_MENU) { return; }
+
+        this.session.state = AppState.RECORDS;
+        this.onStateChanged(AppState.RECORDS);
+    }
+
     public pauseGame(): void {
         if (this.session.state != AppState.PLAYING) { return; }
         this.session.state = AppState.PAUSED;
@@ -107,7 +114,9 @@ export class GameController {
     }
 
     public returnToMainMenu(): void {
-        if (this.session.state !== AppState.GAME_OVER && this.session.state !== AppState.VICTORY) { return; }
+        if (this.session.state !== AppState.GAME_OVER &&
+            this.session.state !== AppState.VICTORY &&
+            this.session.state !== AppState.RECORDS) { return; }
         this.session.state = AppState.MAIN_MENU;
 
         // Notify Angluar that the main menu is now active.
