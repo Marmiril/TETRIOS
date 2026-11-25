@@ -1,4 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap');
 /* GLOBAL PAGE STYLES */
 html,
 body {
@@ -9,7 +9,7 @@ body {
 /* Full-screen game background */
 body {
     min-height: 100vh;
-
+    font-family: 'Orbitron', sans-serif;
     background-image: url('/assets/images/back00.png');
     background-size: cover;
     background-position: center;
@@ -17,4 +17,12 @@ body {
     background-attachment: fixed;
 
     color: #ffffff;
+}
+
+/* Inherit the global typography in form controls. */
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
 }
