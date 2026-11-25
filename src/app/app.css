@@ -18,6 +18,7 @@
     color: #ffffff;
     margin: 1rem 0 2rem;
     --neon-color: 0, 200, 255;
+;
     /* Pulsating neon animation */
     animation: neon-pulse 3s ease-in-out infinite;
 }
@@ -69,6 +70,9 @@
     background-color: #1c1c1c;
     border: 1px solid #444;
     border-radius: 0.5rem;
+    --neon-color: 255, 20, 147;
+    animation: neon-border-pulse 3s ease-in-out infinite;
+    
 }
 
 
@@ -130,8 +134,7 @@
 
 .main-menu-overlay {
     --neon-color: 0, 200, 255;
-    border: 2px solid rgb(var(--neon-color));
-    animation: neon-color 3s ease-in-out infinite;
+    animation: neon-border-pulse 3s ease-in-out infinite;
 }
 
 /* GAME MENU BUTTONS */
@@ -224,17 +227,34 @@
     }
 }
 
-/* Pulsating neon animation */
+/* Pulsating neon glow for text. */
 @keyframes neon-pulse {
     0%, 100% {
         text-shadow:
-        0 0 5px rgba(var(--neon-color), 0.4),
-        0 0 10px rgba(var(--neon-color) 0.2);
+            0 0 5px rgba(var(--neon-color), 0.4),
+            0 0 10px rgba(var(--neon-color), 0.2);
     }
+
     50% {
         text-shadow:
-        0 0 10px rgba(var(--neon-color), 1),
-        0 0 20px rgba(var(--neon-color), 0.8),
-        0 0 40px rgba(var(--neon-color), 0.6);
+            0 0 10px rgba(var(--neon-color), 1),
+            0 0 20px rgba(var(--neon-color), 0.8),
+            0 0 40px rgba(var(--neon-color), 0.6);
+    }
+}
+
+/* Pulsating neon glow around the container. */
+@keyframes neon-border-pulse {
+    0%, 100% {
+        box-shadow:
+            0 0 5px rgba(var(--neon-color), 0.4),
+            0 0 10px rgba(var(--neon-color), 0.2);
+    }
+
+    50% {
+        box-shadow:
+            0 0 10px rgba(var(--neon-color), 1),
+            0 0 20px rgba(var(--neon-color), 0.8),
+            0 0 40px rgba(var(--neon-color), 0.6);
     }
 }
