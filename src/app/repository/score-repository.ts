@@ -5,6 +5,7 @@ export class ScoreRepository {
 
     private readonly storageKey = 'tetrios-record';
     private readonly maxRecords = 15;
+    private readonly initialsKey = 'tetrios-player-initials';
 
     // Retrieves stored recores or initializes the default ranking
     public getRecords(): ScoreRecord[] {
@@ -95,8 +96,17 @@ export class ScoreRepository {
                 candidate.result === AppState.GAME_OVER ||
                 candidate.result === AppState.VICTORY
             )
-        );
-        
+        );        
+    }
+
+    // Retrieves the last registered player initials.
+    public getPlayerInitials(): string {
+        return localStorage.getItem(this.initialsKey);
+    }
+
+    // Persists the last registered player initials.
+    public savePlayerInitials(initials: string): void {
+        localStorage.setItem(this.initialsKey, initials);
     }
 }
 

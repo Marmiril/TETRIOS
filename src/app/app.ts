@@ -32,7 +32,7 @@ export class App implements OnInit, AfterViewInit {
     protected readonly lines = signal(0);
     protected readonly pieces = signal(0);
     protected readonly gameState = signal<AppState>(AppState.MAIN_MENU)
-    protected readonly playerInitials = signal('');
+    protected readonly playerInitials = signal(this.scoreRepository.getPlayerInitials());
     /*
     viewChild.required(): busca el elemento identificado mediante #gameCanvas en la plantilla y establece que debe existir.
     ElementRef: proporciona acceso al elemento HTML real.
