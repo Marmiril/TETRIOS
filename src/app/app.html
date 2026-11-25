@@ -42,7 +42,7 @@
       </div>
       }
 
-      @if (isGameOver) {
+      @if (isGameOver && !hasHighScore) {
       <div class="game-over-overlay">
         <h2>GAME OVER</h2>
         <p>SCORE: {{ score() }}</p>
@@ -50,7 +50,7 @@
       </div>
       }
 
-      @if (isVictory) {
+      @if (isVictory && !hasHighScore) {
       <div class="victory-overlay">
         <h2>MIGHTY VICTORY</h2>
         <p>CONGRATULATIONS!!</p>
@@ -58,6 +58,16 @@
         <p>LINES: {{ lines() }}</p>
         <p>PIECES: {{ pieces() }}</p>
         <button (click)="returnToMainMenu()">MAIN MENU</button>
+      </div>
+      }
+
+      @if (hasHighScore()) {
+      <div class="high-score-overlay">
+        <h2>NEW HIGH SCORE</h2>
+        <p>SCORE: {{ score() }}</p>
+        <p>LEVEL: {{ level() }}</p>
+        <p>LINES: {{ lines() }}</p>
+        <p>PIECES: {{ pieces() }}</p>
       </div>
       }
     </div>
