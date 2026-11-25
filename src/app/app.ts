@@ -32,6 +32,7 @@ export class App implements OnInit, AfterViewInit {
     protected readonly lines = signal(0);
     protected readonly pieces = signal(0);
     protected readonly gameState = signal<AppState>(AppState.MAIN_MENU)
+    protected readonly playerInitials = signal('');
     /*
     viewChild.required(): busca el elemento identificado mediante #gameCanvas en la plantilla y establece que debe existir.
     ElementRef: proporciona acceso al elemento HTML real.
@@ -172,5 +173,13 @@ export class App implements OnInit, AfterViewInit {
             this.hasHighScore.set(false);
         }
 
+    }
+
+    protected updateInitials(value: string): void {
+        this.playerInitials.set(
+            value.toUpperCase()
+                .replace(/[^A-Z]/g, '')
+                .slice(0, 3)
+        );
     }
 }

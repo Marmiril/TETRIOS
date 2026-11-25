@@ -56,7 +56,7 @@ export class ScoreRepository {
     // Checks whether a score exceeds the lowest ranked score.
     public isHighScore(score: number): boolean {
         const records = this.getRecords();
-        const lowestScore = records[records.length - 1].score;
+        const lowestScore = records.at(-1).score;
 
         return score > lowestScore;
     }

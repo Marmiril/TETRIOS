@@ -42,7 +42,7 @@
       </div>
       }
 
-      @if (isGameOver && !hasHighScore) {
+      @if (isGameOver && !hasHighScore()) {
       <div class="game-over-overlay">
         <h2>GAME OVER</h2>
         <p>SCORE: {{ score() }}</p>
@@ -50,7 +50,7 @@
       </div>
       }
 
-      @if (isVictory && !hasHighScore) {
+      @if (isVictory && !hasHighScore()) {
       <div class="victory-overlay">
         <h2>MIGHTY VICTORY</h2>
         <p>CONGRATULATIONS!!</p>
@@ -68,6 +68,11 @@
         <p>LEVEL: {{ level() }}</p>
         <p>LINES: {{ lines() }}</p>
         <p>PIECES: {{ pieces() }}</p>
+
+        <!-- Player initials for the high score ranking. -->
+        <label for="player-initials">ENTER YOU</label>
+        <input #initialsInput id="player-initials" type="text" maxlength="3" placeholder="AAA"
+          [value]="playerInitials()" (input)="updateInitials(initialsInput.value)">
 
         <button (click)="returnToMainMenu()">MAIN MENU</button>
       </div>
