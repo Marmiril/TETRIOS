@@ -9,6 +9,7 @@ export const DEFAULT_DIFFICULTY = 1;
 export const BASE_FALL_INTERVAL = 1000; // Milliseconds
 export const FALL_INTERVAL_DECREMENT = 100;
 export const MAX_LEVEL = 10;
+export const LINE_CLEAR_DELAY = 300;
 
 /* Piece configuration */
 export const DEFAULT_SPEED_MULTIPLIER = 1;

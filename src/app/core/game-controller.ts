@@ -165,6 +165,7 @@ export class GameController {
         if (fullRows.length > 0) {
             this.session.clearingRows = fullRows;
         }
+        
         const clearedRows =  this.session.board.clearFullRows();
 
         this.session.lines += clearedRows;
