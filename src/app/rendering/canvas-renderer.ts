@@ -1,4 +1,4 @@
-import { BOARD_COLUMNS, BOARD_ROWS, CELL_SIZE } from "../config/constants";
+import { BOARD_COLUMNS, BOARD_ROWS, CELL_SIZE,LINE_CLEAR_DELAY } from "../config/constants";
 import { Board } from "../models/board";
 import { GameSession } from "../models/game-session";
 import { Piece } from "../models/piece";
@@ -74,7 +74,7 @@ export class CanvasRenderer {
 
         for (const piece of session.activePieces) { this.drawPiece(piece); }
 
-        this.drawClearingRows(session.clearingRows);
+        this.drawClearingRows(session);
     }
 
     public renderNextPiece(piece: Piece | null): void {
@@ -107,10 +107,19 @@ export class CanvasRenderer {
         }
     }
 
-    public drawClearingRows(rows: number[]): void {
+    // Renders the line clear animation based on its progress.
+    public drawClearingRows(session: GameSession): void {
+        if (session.lineClearDeadline === null) { return; }
+        
+        const remaining = session.lineClearDeadline - Date.now();
+
+        const progress = Math.min(1, Math.max(0, 
+            1 - remaining / LINE_CLEAR_DELAY
+        ));
+
         this.context.fillStyle = '#FFFFFF';
 
-        for (const row of rows) {
+        for (const row of session.clearingRows) {
             this.context.fillRect(
                 0,
                 row * CELL_SIZE,

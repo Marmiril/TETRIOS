@@ -20,6 +20,7 @@ export class GameSession {
     public fallInterval: number;
 
     public clearingRows: number[] = [];
+    public lineClearDeadline: number | null = null;
 
     constructor() {
         this.state = AppState.MAIN_MENU;
