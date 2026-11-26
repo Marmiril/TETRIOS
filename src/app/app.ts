@@ -207,5 +207,12 @@ export class App implements OnInit, AfterViewInit {
         }
     }
 
+    public changeInitials(index: number, direction: -1): void {
+        const initials = this.playerInitials().split('');
+        const currentLetter = initials[index].charCodeAt(0) - 65;
+        const nextLetter = (currentLetter + direction + 26) % 26;
+        initials[index] = String.fromCharCode(nextLetter + 65);
+        this.playerInitials.set(initials.join(''));
+    }
 
 }
