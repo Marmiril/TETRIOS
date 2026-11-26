@@ -32,7 +32,7 @@ export class GameController {
     private lockPaused = false;
     // Controls the delay before completed rows are removed.
     private lineClearTimer: ReturnType<typeof setTimeout> | null = null;
-    private lineClearTimerRemainig= LINE_CLEAR_DELAY;
+    private lineClearTimeRemaining= LINE_CLEAR_DELAY;
     private lineClearDeadline: number | null = null;
 
     constructor(
@@ -169,12 +169,7 @@ export class GameController {
 
         if (fullRows.length > 0) {
             this.session.clearingRows = fullRows;
-
-            // Delay row removal until the animation finishes
-            this.lineClearTimer = setTimeout(() => {
-                this.lineClearTimer = null;
-                this.finishLineClear();
-            }, LINE_CLEAR_DELAY);
+            this.startLineClearDelay();
             return;
         }
         this.finishLineClear();
@@ -395,6 +390,18 @@ export class GameController {
             this.lineClearTimer = null;
         }
 
+        this.lineClearDeadline = null;
+        this.lineClearTimeRemaining = LINE_CLEAR_DELAY;
         this.session.clearingRows = [];
+    }
+
+    // Starts or resumes the line clear timer
+    private startLineClearDelay(): void {
+        if (this.lineClearTimer !== null) { return; } 
+        this.lineClearDeadline = Date.now() + this.lineClearTimeRemaining;
+        this.lineClearTimer = setTimeout(() => {
+            this.stopLineClearDelay();
+            this.finishLineClear();
+        }, this.lineClearTimeRemaining);
     }
 } 
