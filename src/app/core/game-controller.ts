@@ -91,6 +91,20 @@ export class GameController {
             this.lockTimeRemaining = remaining
             this.lockPaused = true;
         }
+
+        // Pause the line clear timer while preserving its remaining time.
+        if (this.lineClearTimer !== null &&
+            this.session.lineClearDeadline !== null
+        ) {
+            this.lineClearTimeRemaining = Math.max(
+                0,
+                this.session.lineClearDeadline - Date.now()
+            );
+
+            clearTimeout(this.lineClearTimer);
+            this.lineClearTimer = null;
+            this.session.lineClearDeadline = null;
+        }
     }
 
     public resumeGame(): void {

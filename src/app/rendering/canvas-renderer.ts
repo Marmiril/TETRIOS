@@ -117,7 +117,10 @@ export class CanvasRenderer {
             1 - remaining / LINE_CLEAR_DELAY
         ));
 
-        this.context.fillStyle = '#FFFFFF';
+        // Gradually reduce the brightness as the animation progresses.
+        const brightness = Math.round(255 * (1 - progress));
+
+        this.context.fillStyle = `rgb(${brightness}, ${brightness}, ${brightness})`;
 
         for (const row of session.clearingRows) {
             this.context.fillRect(
