@@ -167,14 +167,6 @@ export class App implements OnInit, AfterViewInit {
 
     }
 
-    protected updateInitials(value: string): void {
-        this.playerInitials.set(
-            value.toUpperCase()
-                .replace(/[^A-Z]/g, '')
-                .slice(0, 3)
-        );
-    }
-
     protected saveRecord(): void {
         if (!this.hasHighScore()) { return; }
 
@@ -207,7 +199,7 @@ export class App implements OnInit, AfterViewInit {
         }
     }
 
-    public changeInitials(index: number, direction: -1): void {
+    public changeInitial(index: number, direction: -1 | 1): void {
         const initials = this.playerInitials().split('');
         const currentLetter = initials[index].charCodeAt(0) - 65;
         const nextLetter = (currentLetter + direction + 26) % 26;

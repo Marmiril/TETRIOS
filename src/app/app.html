@@ -70,12 +70,22 @@
         <p>PIECES: {{ pieces() }}</p>
 
         <!-- Player initials for the high score ranking. -->
-        <label for="player-initials">ENTER YOU</label>
-        <input #initialsInput id="player-initials" type="text" maxlength="3" placeholder="AAA"
-          [value]="playerInitials()" (input)="updateInitials(initialsInput.value)">
+        @for (letter of playerInitials().split(''); track $index) {
+        <div class="initial-slot">
 
-        <button (click)="saveRecord()" [disabled]="playerInitials().length !== 3">SAVE RECORD</button>
-        <button (click)="returnToMainMenu()">MAIN MENU</button>
+          <button type="button" (click)="changeInitial($index, 1)">
+            [attr.aria-label]="'Next letter " + ($index + 1)">
+            ▲
+          </button>
+
+          <span class="initial-letter">{{ letter }}</span>
+
+          <button type="button" (click)="changeInitial($index, -1)"
+            [attr.aria-label]="'Previous letter ' + ($index + 1)">
+          </button>
+
+        </div>
+        }
       </div>
       }
 
