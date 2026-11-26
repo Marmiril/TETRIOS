@@ -165,26 +165,7 @@ export class GameController {
         if (fullRows.length > 0) {
             this.session.clearingRows = fullRows;
         }
-        
-        const clearedRows =  this.session.board.clearFullRows();
-
-        this.session.lines += clearedRows;
-        if (clearedRows > 0) { this.onLinesChanged(this.session.lines); }
-
-        this.session.score += LINE_CLEAR_POINTS[clearedRows] * this.session.level;
-
-        if (clearedRows > 0) {
-            this.onScoreChanged(this.session.score);
-
-            if (this.session.lines >= MAX_LEVEL * 10) {
-                this.endGame(AppState.VICTORY);
-                return;
-            }
-
-            this.updateLevel();
-        }
-
-        this.spawnPiece();
+        this.finishLineClear();
     }
 
     // Advances the game by one gravity step.
@@ -370,4 +351,29 @@ export class GameController {
     private updateFallInterval(): void {
         this.session.fallInterval = BASE_FALL_INTERVAL - (this.session.level - 1) * FALL_INTERVAL_DECREMENT;
     }
+
+    // Removes completed rows, updates statistics and spawns the next piece.
+    private  finishLineClear(): void {
+        const clearedRows = this.session.board.clearFullRows();
+
+        this.session.clearingRows = [];
+
+        this.session.lines += clearedRows;
+
+        if (clearedRows > 0) { this.onLinesChanged(this.session.lines); }
+
+        this.session.score += LINE_CLEAR_POINTS[clearedRows] * this.session.level;
+
+        if (clearedRows > 0) {
+            this.onScoreChanged(this.session.score); 
+
+            if (this.session.lines >= MAX_LEVEL * 10) {
+                this.endGame(AppState.VICTORY);
+                return;
+            }
+            this.updateLevel();
+        }
+        this.spawnPiece();
+    }
+    
 } 
