@@ -384,4 +384,13 @@ export class GameController {
         this.spawnPiece();
     }
     
+    // Cancels the lne clear timer and resets pending rows
+    private stopLineClearDelay(): void {
+        if (this.lineClearTimer !== null) {
+            clearTimeout(this.lineClearTimer);
+            this.lineClearTimer = null;
+        }
+
+        this.session.clearingRows = [];
+    }
 } 
