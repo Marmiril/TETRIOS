@@ -7,7 +7,7 @@
  * Ensures that state transitions only occur when permitted.
  */
 
-import { BASE_FALL_INTERVAL, FALL_INTERVAL_DECREMENT, LINE_CLEAR_POINTS, LOCK_DELAY, MAX_LEVEL, MAX_LOCK_RESETS } from '../config/constants';
+import { BASE_FALL_INTERVAL, FALL_INTERVAL_DECREMENT, LINE_CLEAR_POINTS, LINE_CLEAR_DELAY, LOCK_DELAY, MAX_LEVEL, MAX_LOCK_RESETS } from '../config/constants';
 import { AppState } from '../config/enum';
 import { CollisionSystem } from '../logic/collision-system';
 import { PieceBag } from '../logic/piece-bag';
@@ -30,6 +30,8 @@ export class GameController {
     private lockTimeRemaining = LOCK_DELAY;
     private lockDeadline: number | null = null;
     private lockPaused = false;
+    // Controls the delay before completed rows are removed.
+    private lineClearTimer: ReturnType<typeof setTimeout> | null = null;
 
     constructor(
         private readonly onScoreChanged: (score: number) => void,
@@ -156,7 +158,6 @@ export class GameController {
             piece
         );
 
-
         this.session.activePieces.shift();
         
         // Identify completed rows before removing thme
@@ -164,6 +165,13 @@ export class GameController {
 
         if (fullRows.length > 0) {
             this.session.clearingRows = fullRows;
+
+            // Delay row removal until the animation finishes
+            this.lineClearTimer = setTimeout(() => {
+                this.lineClearTimer = null;
+                this.finishLineClear();
+            }, LINE_CLEAR_DELAY);
+            return;
         }
         this.finishLineClear();
     }
