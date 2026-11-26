@@ -119,6 +119,11 @@ export class GameController {
             this.lockPaused = false;
             this.startLockDelay();
         }
+
+        // Resume the pending line clear animatio
+        if (this.session.clearingRows.length > 0){
+            this.startLineClearDelay();
+        }
     }
 
     public endGame(result: AppState.GAME_OVER | AppState.VICTORY = AppState.GAME_OVER): void {

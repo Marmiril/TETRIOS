@@ -159,7 +159,7 @@ export class App implements OnInit, AfterViewInit {
         if (state === AppState.GAME_OVER || state === AppState.VICTORY) {
             const session = this.controller.getSession();
             // Clear the initials for each compelted 
-            this.playerInitials.set('');
+            this.playerInitials.set('AAA');
             this.hasHighScore.set(this.scoreRepository.isHighScore(session.score));
         } else {
             this.hasHighScore.set(false);
