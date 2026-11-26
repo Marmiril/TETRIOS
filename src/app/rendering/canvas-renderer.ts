@@ -109,9 +109,15 @@ export class CanvasRenderer {
 
     // Renders the line clear animation based on its progress.
     public drawClearingRows(session: GameSession): void {
-        if (session.lineClearDeadline === null) { return; }
-        
-        const remaining = session.lineClearDeadline - Date.now();
+        //if (session.lineClearDeadline === null) { return; }
+        if (session.clearingRows.length === 0) { return; }
+
+        // Use the stored remaining time when the animation is paused.
+        const remaining = session.lineClearDeadline === null
+            ? session.lineClearTimeRemaining
+            : session.lineClearDeadline - Date.now()
+
+
 
         const progress = Math.min(1, Math.max(0, 
             1 - remaining / LINE_CLEAR_DELAY

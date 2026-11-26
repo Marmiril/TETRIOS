@@ -1,5 +1,5 @@
 import { AppState, GameMode, GameDifficulty } from '../config/enum';
-import { DEFAULT_DIFFICULTY, BASE_FALL_INTERVAL } from '../config/constants';
+import { DEFAULT_DIFFICULTY, BASE_FALL_INTERVAL, LINE_CLEAR_DELAY } from '../config/constants';
 import { Board } from './board';
 import { Piece } from './piece';
 
@@ -21,6 +21,8 @@ export class GameSession {
 
     public clearingRows: number[] = [];
     public lineClearDeadline: number | null = null;
+
+    public lineClearTimeRemaining = LINE_CLEAR_DELAY;
 
     constructor() {
         this.state = AppState.MAIN_MENU;
