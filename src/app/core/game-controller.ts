@@ -52,7 +52,8 @@ export class GameController {
     public startGame(): void {
         this.stopGravity();
         this.stopLockDelay();
-
+        this.stopLineClearDelay();
+        
         this.session = new GameSession();
         this.onLevelChanged(this.session.level);
         this.onScoreChanged(this.session.score);
