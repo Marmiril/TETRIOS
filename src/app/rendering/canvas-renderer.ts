@@ -73,6 +73,8 @@ export class CanvasRenderer {
         this.drawBoard(session.board);
 
         for (const piece of session.activePieces) { this.drawPiece(piece); }
+
+        this.drawClearingRows(session.clearingRows);
     }
 
     public renderNextPiece(piece: Piece | null): void {
@@ -105,6 +107,18 @@ export class CanvasRenderer {
         }
     }
 
+    public drawClearingRows(rows: number[]): void {
+        this.context.fillStyle = '#FFFFFF';
+
+        for (const row of rows) {
+            this.context.fillRect(
+                0,
+                row * CELL_SIZE,
+                BOARD_COLUMNS * CELL_SIZE,
+                CELL_SIZE
+            );
+        }
+    }
 
 
 }
