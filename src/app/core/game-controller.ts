@@ -32,6 +32,8 @@ export class GameController {
     private lockPaused = false;
     // Controls the delay before completed rows are removed.
     private lineClearTimer: ReturnType<typeof setTimeout> | null = null;
+    private lineClearTimerRemainig= LINE_CLEAR_DELAY;
+    private lineClearDeadline: number | null = null;
 
     constructor(
         private readonly onScoreChanged: (score: number) => void,
@@ -53,7 +55,7 @@ export class GameController {
         this.stopGravity();
         this.stopLockDelay();
         this.stopLineClearDelay();
-        
+
         this.session = new GameSession();
         this.onLevelChanged(this.session.level);
         this.onScoreChanged(this.session.score);
@@ -114,6 +116,7 @@ export class GameController {
         this.onStateChanged(result);
         this.stopGravity();
         this.stopLockDelay();
+        this.stopLineClearDelay();
     }
 
     public returnToMainMenu(): void {
