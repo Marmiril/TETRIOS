@@ -236,7 +236,7 @@
 /* HIGH SCORE - INITIALS SELECTOR */ 
 
 /* Arrange the three inital slots horizontally */
-.initals-selector {
+.initials-selector {
     display: flex;
     justify-content: center;
     gap: 0.75rem;
@@ -244,7 +244,7 @@
 }
 
 /* Stack the controls and letter vertically. */
-.inital-slot {
+.initial-slot {
     display: flex;
     flex-direction: column;
     align-items: center;

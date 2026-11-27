@@ -70,7 +70,7 @@
         <p>PIECES: {{ pieces() }}</p>
 
         <!-- Arcade-style initials selector. -->
-        <span class="stat-label initials-label">ENTER YOU</span>
+        <span class="initials-label">ENTER YOU</span>
 
         <div class="initials-selector">
           @for (letter of playerInitials().split(''); track $index) {
@@ -92,7 +92,10 @@
 
           }
         </div>
+        <button type="button" (click)="saveRecord()">SAVE</button>
+        <button type="button" (click)="returnToMainMenu()">MAIN MENU</button>
       </div>
+
       }
       @if (isRecords) {
       <div class="records-overlay">
