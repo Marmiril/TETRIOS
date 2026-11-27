@@ -69,26 +69,31 @@
         <p>LINES: {{ lines() }}</p>
         <p>PIECES: {{ pieces() }}</p>
 
-        <!-- Player initials for the high score ranking. -->
-        @for (letter of playerInitials().split(''); track $index) {
-        <div class="initial-slot">
+        <!-- Arcade-style initials selector. -->
+        <span class="initials-label">ENTER YOU</span>
 
-          <button type="button" (click)="changeInitial($index, 1)">
-            [attr.aria-label]="'Next letter " + ($index + 1)">
-            ▲
-          </button>
+        <div class="initials-selector">
+          @for (letter of playerInitials().split(''); track $index) {
+          <div class="initial-slot">
 
-          <span class="initial-letter">{{ letter }}</span>
+            <button type="button" (click)="changeInitial($index, 1)" [attr.aria-label]="'Next letter ' + ($index + 1)">
+              ▲
+            </button>
 
-          <button type="button" (click)="changeInitial($index, -1)"
-            [attr.aria-label]="'Previous letter ' + ($index + 1)">
-          </button>
+            <span class="initial-letter">{{ letter }}</span>
 
+            <button type="button" (click)="changeInitial($index, -1)"
+              [attr.aria-label]="'Previous letter ' + ($index + 1)">
+              ▼
+            </button>
+
+          </div>
+
+
+          }
         </div>
-        }
       </div>
       }
-
       @if (isRecords) {
       <div class="records-overlay">
         <h2>WALL OF FAME</h2>
@@ -142,9 +147,5 @@
     </div>
 
   </div>
-
-
-
-
 
 </main>
