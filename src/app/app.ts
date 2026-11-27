@@ -21,6 +21,9 @@ export class App implements OnInit, AfterViewInit {
     private renderer!: CanvasRenderer;
     private nextPieceRenderer!: CanvasRenderer;
     private animationFrameId: number | null = null;
+
+    // Reference to the initial menu button for keyboard navigation.
+    private readonly startGameButton = viewChild.required<ElementRef<HTMLButtonElement>>('startGameButton');
     
     private readonly gameCanvas = viewChild.required<ElementRef<HTMLCanvasElement>>('gameCanvas');
     private readonly nextPieceCanvas  = viewChild.required<ElementRef<HTMLCanvasElement>>('nextPieceCanvas');
@@ -73,6 +76,9 @@ export class App implements OnInit, AfterViewInit {
 
         this.renderer = new CanvasRenderer(context); // Creamos el objeto encargado de dibujar y le entregamos el contexto gráfico.
          
+        // Set the initial keyboard focus on the main menu.
+        this.startGameButton().nativeElement.focus();
+
         // Initialize an independent rendering context for the next-piece preview
         const nextCanvas = this.nextPieceCanvas().nativeElement;
         const nextContext = nextCanvas.getContext('2d');

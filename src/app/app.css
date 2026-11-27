@@ -46,6 +46,7 @@
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
 }
 
+
 /* LEFT PANEL - STATISTICS */
 /* Separate the statistics panels vertically. */
 .score-display {
@@ -173,7 +174,8 @@
 }
 
 /* Highlight buttons on hover. */
-.board-container button:hover {
+.board-container button:hover,
+.board-container button:focus-visible  {
     background-color: #24506a;
     box-shadow: 0 0 12px rgba(0, 200, 255, 0.5);
 }

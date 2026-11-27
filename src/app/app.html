@@ -28,7 +28,7 @@
       @if (isMainMenu) {
       <div class="main-menu-overlay">
 
-        <button (click)="startGame()">START GAME</button>
+        <button #startGameButton (click)="startGame()">START GAME</button>
         <button (click)="openRecords()">WALL OF FAME</button>
       </div>
       }
