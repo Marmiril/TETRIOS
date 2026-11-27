@@ -233,6 +233,39 @@
     animation: text-shine 2s linear infinite;
 }
 
+/* HIGH SCORE - INITIALS SELECTOR */ 
+
+/* Arrange the three inital slots horizontally */
+.initals-selector {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin: 1rem 0;
+}
+
+/* Stack the controls and letter vertically. */
+.inital-slot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+/* Highlight the selected initial. */
+.initial-letter {
+    font-size: 1.75rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    color: #ffffff;
+    text-shadow: 0 0 8px #00c8ff;
+}
+
+
+
+
+/*******************************************/
+/********** KEY FRAMES ********************/
+/*******************************************/
 /* Moves the ligth reflection from left to right */
 @keyframes text-shine {
     from {
@@ -279,3 +312,5 @@
     from { background-position: 0 25%; }
     to { background-position: 0 0; }
 }
+
+

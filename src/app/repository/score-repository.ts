@@ -38,7 +38,7 @@ export class ScoreRepository {
             { length: this.maxRecords },
             (_, index): ScoreRecord => ({
                 initials: 'CPU',
-                score: (this.maxRecords - index) * 1000,
+                score: (this.maxRecords - index) * 10,
                 level: 1,
                 lines: 0,
                 pieces: 0, 
